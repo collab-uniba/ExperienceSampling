@@ -1,6 +1,9 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
+from PyQt5.QtGui import QPixmap
+
 import sys
+import os
 
 class Window:
     def showWindow(self):
@@ -15,7 +18,7 @@ class Window:
         label1.setAlignment(Qt.AlignCenter)
         label1.setStyleSheet("font-size: 12pt; font-weight: bold;")
         layout.addWidget(label1)
-        layout.addWidget(QComboBox())
+        layout.addWidget(QComboBox(), 0, Qt.AlignHCenter)
 
         layout.addItem(QSpacerItem(25, 25, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
@@ -28,10 +31,21 @@ class Window:
         layout.addWidget(feel1Group)
         feel1GroupLayout = QVBoxLayout()
         feel1Group.setLayout(feel1GroupLayout)
+        feel1ImgLayout = QHBoxLayout()
+        feel1GroupLayout.addLayout(feel1ImgLayout)
         feel1RadioLayout = QHBoxLayout()
         feel1GroupLayout.addLayout(feel1RadioLayout)
         feel1LabelLayout = QHBoxLayout()
         feel1GroupLayout.addLayout(feel1LabelLayout)
+
+        #images
+        images1 = []
+        for i in range(1,6):
+            j = QLabel()
+            images1.append(j)
+            j.setPixmap(QPixmap(os.getcwd() + "/icons/V" + str(i) + ".png"))
+
+        [feel1ImgLayout.addWidget(i, 0, Qt.AlignCenter) for i in images1]
 
         #radio buttons
         radioButtons1 = []
@@ -52,10 +66,21 @@ class Window:
         layout.addWidget(feel2Group)
         feel2GroupLayout = QVBoxLayout()
         feel2Group.setLayout(feel2GroupLayout)
+        feel2ImgLayout = QHBoxLayout()
+        feel2GroupLayout.addLayout(feel2ImgLayout)
         feel2RadioLayout = QHBoxLayout()
         feel2GroupLayout.addLayout(feel2RadioLayout)
         feel2LabelLayout = QHBoxLayout()
         feel2GroupLayout.addLayout(feel2LabelLayout)
+
+        #images
+        images2 = []
+        for i in range(1,6):
+            j = QLabel()
+            images2.append(j)
+            j.setPixmap(QPixmap(os.getcwd() + "/icons/A" + str(i) + ".png"))
+
+        [feel2ImgLayout.addWidget(i, 0, Qt.AlignCenter) for i in images2]
 
         #radio buttons
         radioButtons2 = []
@@ -88,7 +113,7 @@ class Window:
         layout.addLayout(doneLayout)
         doneLayout.addWidget(QLabel())
         button1 = QPushButton("Done")
-        doneLayout.addWidget(button1)
+        doneLayout.addWidget(button1,0,Qt.AlignHCenter)
         label4 = QLabel("Export to csv...")
         label4.setAlignment(Qt.AlignRight)
         doneLayout.addWidget(label4)
