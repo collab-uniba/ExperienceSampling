@@ -146,6 +146,10 @@ class MainWindow(QMainWindow):
         self.tray_icon.setContextMenu(tray_menu)
         self.tray_icon.show()
 
+    def showEvent(self, event):
+        self.openTime = int(time.time())
+        self.show()
+
     def closeEvent(self, event):
         event.ignore()
         self.resetForm()
@@ -172,7 +176,7 @@ class MainWindow(QMainWindow):
         with open(os.getcwd() + '/data.csv', mode='a') as data:
             data_writer = csv.writer(data, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
-            time = datetime.datetime.now().replace(microsecond=0)
+            submitTime = int(time.time())
             activity = self.combobox1.currentText()
             notes = self.textBox.toPlainText()
             
@@ -190,7 +194,7 @@ class MainWindow(QMainWindow):
                 if i.isChecked():
                     arousal = i.text()
 
-            data_writer.writerow([time,activity,valence,arousal,notes])
+            data_writer.writerow([self.openTime,submitTime,activity,valence,arousal,notes])
             self.hide()
 
     def saveCSV(self):
