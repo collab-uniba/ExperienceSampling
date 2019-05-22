@@ -6,7 +6,13 @@ import os, sys, time, csv, datetime, shutil
 
 class MainWindow(QMainWindow):
 
-    def __init__(self):
+    def __init__(self, time=0):
+
+        self.timerEnabled = True
+        self.timeout = time
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.show)
+
         QMainWindow.__init__(self)
         self.setWindowTitle("Experience Sampling")
 
@@ -119,7 +125,8 @@ class MainWindow(QMainWindow):
         #footer
         doneLayout = QHBoxLayout()
         layout.addLayout(doneLayout)
-        doneLayout.addWidget(QLabel())
+        self.label5 = QLabel()
+        doneLayout.addWidget(self.label5)
         self.button1 = QPushButton("Done")
         self.button1.clicked.connect(self.writeToCSV)
         doneLayout.addWidget(self.button1,0,Qt.AlignHCenter)
@@ -134,20 +141,32 @@ class MainWindow(QMainWindow):
         
         #tray logic
         show_action = QAction("Show", self)
-        quit_action = QAction("Exit", self)
         hide_action = QAction("Hide", self)
+        set_action = QAction("Set timer", self)
+        start_action = QAction("Enable timer", self)
+        stop_action = QAction("Disable timer", self)
+        quit_action = QAction("Exit", self)
         show_action.triggered.connect(self.show)
         hide_action.triggered.connect(self.hide)
+        set_action.triggered.connect(self.setTimer)
+        start_action.triggered.connect(self.enableTimer)
+        stop_action.triggered.connect(self.disableTimer)
         quit_action.triggered.connect(qApp.quit)
         tray_menu = QMenu()
         tray_menu.addAction(show_action)
         tray_menu.addAction(hide_action)
+        tray_menu.addAction(set_action)
+        tray_menu.addAction(start_action)
+        tray_menu.addAction(stop_action)
         tray_menu.addAction(quit_action)
         self.tray_icon.setContextMenu(tray_menu)
         self.tray_icon.show()
 
+        self.enableTimer()
+
     def showEvent(self, event):
         self.openTime = int(time.time())
+        self.timer.stop()
         self.show()
 
     def closeEvent(self, event):
@@ -156,6 +175,7 @@ class MainWindow(QMainWindow):
         self.hide()
 
     def hideEvent(self,event):
+        self.startTimer()
         self.resetForm()
         self.hide()
         
@@ -171,6 +191,22 @@ class MainWindow(QMainWindow):
             i.setAutoExclusive(True)
         self.textBox.setPlainText('')
 
+    def startTimer(self):
+        if self.timerEnabled and self.timeout>0:
+            self.timer.start(self.timeout*1000*60)
+
+    def enableTimer(self):
+        if self.timeout>0:
+            self.timerEnabled = True
+            self.startTimer()
+            self.label5.setText("Timer: " + str(self.timeout) + " min")
+        else:
+            self.disableTimer()
+
+    def disableTimer(self):
+        self.timerEnabled = False
+        self.timer.stop()
+        self.label5.setText("Timer: disabled")
 
     def writeToCSV(self):
         with open(os.getcwd() + '/data.csv', mode='a') as data:
@@ -201,6 +237,11 @@ class MainWindow(QMainWindow):
         name = QFileDialog.getSaveFileName(self, 'Salva dati', os.getcwd(), 'CSV(*.csv)')
         shutil.copyfile(os.getcwd() + '/data.csv', name[0])
 
+    def setTimer(self):
+        i, okPressed = QInputDialog.getInt(self, "Set timer","Minutes:", self.timeout, 0, 100, 1)
+        if okPressed and i>0:
+            self.timeout = i
+            self.enableTimer()
 
 class QLabelLink(QLabel):
     clicked=pyqtSignal()
@@ -215,12 +256,8 @@ class QLabelLink(QLabel):
 if __name__ == "__main__":
 
     app = QApplication(sys.argv)
-    mw = MainWindow()
+    mw = MainWindow(2)
     mw.show()
-
-    timer = QTimer()
-    timer.timeout.connect(mw.show)
-    timer.start(1000*60*60)
 
     sys.exit(app.exec())
 
