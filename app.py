@@ -1,17 +1,19 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import *
 
-import sys
 import os
 
-class Window:
-    def showWindow(self):
-        
-        app = QApplication([])
+class MainWindow(QMainWindow):
+    def __init__(self):
+        # Be sure to call the super class method
+        QMainWindow.__init__(self)
+        self.setWindowTitle("Experience Sampling") 
 
-        window = QWidget()
+        central_widget = QWidget(self)
+        self.setCentralWidget(central_widget)
         layout = QVBoxLayout()
+        central_widget.setLayout(layout)
 
         #combobox
         label1 = QLabel('In which activity have you mainly been involved since the last notification?')
@@ -103,6 +105,8 @@ class Window:
         label3.setStyleSheet("font-size: 10pt; font-weight: bold;")
         layout.addWidget(label3)
         textBox = QPlainTextEdit()
+        print(2*textBox.fontMetrics().lineSpacing())
+        textBox.setFixedHeight(3*textBox.fontMetrics().lineSpacing())
         layout.addWidget(textBox)
         textBox.setPlaceholderText("Did you experience anything that might have affected your emotion during the last session?")
 
@@ -118,11 +122,32 @@ class Window:
         label4.setAlignment(Qt.AlignRight)
         doneLayout.addWidget(label4)
 
-        window.setLayout(layout)
-        window.show()
+        #tray icon
+        self.tray_icon = QSystemTrayIcon(self)
+        self.tray_icon.setIcon(QIcon(os.getcwd() + "/icons/status.png"))
+        
+        #tray logic
+        show_action = QAction("Show", self)
+        quit_action = QAction("Exit", self)
+        hide_action = QAction("Hide", self)
+        show_action.triggered.connect(self.show)
+        hide_action.triggered.connect(self.hide)
+        quit_action.triggered.connect(qApp.quit)
+        tray_menu = QMenu()
+        tray_menu.addAction(show_action)
+        tray_menu.addAction(hide_action)
+        tray_menu.addAction(quit_action)
+        self.tray_icon.setContextMenu(tray_menu)
+        self.tray_icon.show()
 
-        app.exec_()
+    def closeEvent(self, event):
+        event.ignore()
+        self.hide()
 
 if __name__ == "__main__":
-    test = Window()
-    test.showWindow()
+    import sys
+ 
+    app = QApplication(sys.argv)
+    mw = MainWindow()
+    mw.show()
+    sys.exit(app.exec())
