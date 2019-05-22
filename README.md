@@ -1,7 +1,7 @@
 # PersonalAnalytics
 Submission per l'Emotions Contest, Uniba
 
-L'applicazione mostra una finestra ogni 60 minuti. Quando la finestra viene chiusa, l'applicazione rimane in esecuzione nella system tray. Dalla system tray è possibile in ogni momento richiamare la finestra o uscire dal programma.
+L'applicazione mostra una finestra ogni 60 minuti (di default). Quando la finestra viene chiusa, l'applicazione rimane in esecuzione nella system tray. Dalla system tray è possibile in ogni momento richiamare la finestra, uscire dal programma e abilitare, disabilitare e impostare il timer.
 
 I dati vengono salvati in file csv che è possibile copiare in un'altra directory.
 
