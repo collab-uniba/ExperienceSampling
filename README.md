@@ -13,5 +13,7 @@ Esempio di file csv:
 ```
 
 ![Screenshot](screenshot_main.png)
+![Screenshot](screenshot_timer.png)
+![Screenshot](screenshot_tray.png)
 ![Screenshot](screenshot_save.png)
 
