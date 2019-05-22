@@ -2,13 +2,12 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-import os
+import os, time
 
 class MainWindow(QMainWindow):
     def __init__(self):
-        # Be sure to call the super class method
         QMainWindow.__init__(self)
-        self.setWindowTitle("Experience Sampling") 
+        self.setWindowTitle("Experience Sampling")
 
         central_widget = QWidget(self)
         self.setCentralWidget(central_widget)
@@ -105,7 +104,6 @@ class MainWindow(QMainWindow):
         label3.setStyleSheet("font-size: 10pt; font-weight: bold;")
         layout.addWidget(label3)
         textBox = QPlainTextEdit()
-        print(2*textBox.fontMetrics().lineSpacing())
         textBox.setFixedHeight(3*textBox.fontMetrics().lineSpacing())
         layout.addWidget(textBox)
         textBox.setPlaceholderText("Did you experience anything that might have affected your emotion during the last session?")
@@ -146,8 +144,18 @@ class MainWindow(QMainWindow):
 
 if __name__ == "__main__":
     import sys
- 
+    
+    def tick():
+        print("tick")
+
     app = QApplication(sys.argv)
     mw = MainWindow()
     mw.show()
-    sys.exit(app.exec())
+
+    timer = QTimer()
+    timer.timeout.connect(mw.show)
+    timer.start(1000*10)
+
+    app.exec()
+    sys.exit(1)
+
