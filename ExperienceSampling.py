@@ -10,6 +10,8 @@ class MainWindow(QMainWindow):
 
     def __init__(self, time=60):
 
+        self.filepath = os.path.join(os.getcwd(), datetime.date.today().isoformat() + '.csv')
+
         self.timerEnabled = True
         self.timeout = time
         self.timer = QTimer()
@@ -211,7 +213,10 @@ class MainWindow(QMainWindow):
         self.label5.setText("Timer: disabled")
 
     def writeToCSV(self):
-        with open(os.getcwd() + '/' + datetime.date.today().isoformat() + '.csv', mode='a') as data:
+
+        self.filepath = os.path.join(os.getcwd(), datetime.date.today().isoformat() + '.csv')
+
+        with open(self.filepath, mode='a') as data:
             data_writer = csv.writer(data, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
             submitTime = int(time.time())
@@ -237,7 +242,7 @@ class MainWindow(QMainWindow):
 
     def saveCSV(self):
         name = QFileDialog.getSaveFileName(self, 'Salva dati', os.getcwd(), 'CSV(*.csv)')
-        shutil.copyfile(os.getcwd() + '/data.csv', name[0])
+        shutil.copyfile(self.filepath, name[0])
 
     def setTimer(self):
         i, okPressed = QInputDialog.getInt(self, "Set timer","Minutes:", self.timeout, 0, 100, 1)

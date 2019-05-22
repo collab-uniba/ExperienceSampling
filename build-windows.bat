@@ -1,0 +1,1 @@
+pyinstaller.exe --onefile --windowed --add-data "icons/*.png;icons" ExperienceSampling.py

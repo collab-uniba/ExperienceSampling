@@ -5,7 +5,9 @@ L'applicazione di **experience sampling** mostra la sua finestra principale ogni
 
 I dati inseriti (insieme con il timestamp di apertura della finestra e il timestamp di invio del form) vengono salvati in file CSV (il cui nome contiene la data, esempio: 2019-12-22.csv) che è possibile copiare in un'altra directory direttamente dall'applicazione.
 
-L'applicazione è scritta in Python 3, dipende unicamente dalle librerie Qt5 ed è, pertanto, **multipiattaforma**. Tutte le icone provengono dal repository https://github.com/collab-uniba/PersonalAnalytics/tree/field_study_merge
+L'applicazione è scritta in Python 3, dipende unicamente dalle librerie Qt5 ed è, pertanto, **multipiattaforma**. È stata testata su Windows e Linux. Tutte le icone provengono dal repository https://github.com/collab-uniba/PersonalAnalytics/tree/field_study_merge
+
+**I binari precompilati sono disponibili nella directory `dist/`**
 
 Esempio di file csv:
 ```
@@ -15,6 +17,8 @@ Esempio di file csv:
 ```
 
 ![Screenshot](screenshot_main.png)
+
+![Screenshot](screenshot_windows.png)
 
 ![Screenshot](screenshot_timer.png)
 
@@ -27,3 +31,5 @@ Esempio di file csv:
 È necessario avere le librerie PyQt5 installate e pyinstaller per Python 3.
 
 Per generare l'eseguibile Linux, eseguire in un ambiente Linux il file `build-linux.sh`. L'eseguibile generato verrà salvato nella directory `dist/`.
+
+In Windows eseguire il file `build-windows.bat` per generare un exe in `dist/`.
