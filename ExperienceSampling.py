@@ -248,6 +248,7 @@ class MainWindow(QMainWindow):
         i, okPressed = QInputDialog.getInt(self, "Set timer","Minutes:", self.timeout, 0, 100, 1)
         if okPressed and i>0:
             self.timeout = i
+            self.disableTimer()
             self.enableTimer()
 
 class QLabelLink(QLabel):
@@ -272,6 +273,7 @@ def resource_path(relative_path):
 if __name__ == "__main__":
 
     app = QApplication(sys.argv)
+    app.setQuitOnLastWindowClosed(False)
     mw = MainWindow(60)
     mw.show()
 
