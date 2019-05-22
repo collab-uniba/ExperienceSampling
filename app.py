@@ -57,6 +57,7 @@ class MainWindow(QMainWindow):
         [self.radioButtons1.append(QRadioButton(str(i))) for i in range(1,10)] 
         [feel1RadioLayout.addWidget(i) for i in self.radioButtons1]
 
+        #labels
         label1_1 = QLabel("Very unpleasant")
         feel1LabelLayout.addWidget(label1_1)
         label1_2 = QLabel("Neutral")
@@ -92,6 +93,7 @@ class MainWindow(QMainWindow):
         [self.radioButtons2.append(QRadioButton(str(i))) for i in range(1,10)] 
         [feel2RadioLayout.addWidget(i) for i in self.radioButtons2]
 
+        #labels
         label2_1 = QLabel("Very calm")
         feel2LabelLayout.addWidget(label2_1)
         label2_2 = QLabel("Neutral")
@@ -122,11 +124,8 @@ class MainWindow(QMainWindow):
         self.button1.clicked.connect(self.writeToCSV)
         doneLayout.addWidget(self.button1,0,Qt.AlignHCenter)
         label4 = QLabelLink("Export to csv...")
-        label4.setStyleSheet("color: blue; text-decoration: underline;")
         label4.setAlignment(Qt.AlignRight)
-
-        label4.clicked.connect(self.file_save)
-
+        label4.clicked.connect(self.saveCSV)
         doneLayout.addWidget(label4)
 
         #tray icon
@@ -149,7 +148,25 @@ class MainWindow(QMainWindow):
 
     def closeEvent(self, event):
         event.ignore()
+        self.resetForm()
         self.hide()
+
+    def hideEvent(self,event):
+        self.resetForm()
+        self.hide()
+        
+    def resetForm(self):
+        self.combobox1.setCurrentIndex(0)
+        for i in self.radioButtons1:
+            i.setAutoExclusive(False)
+            i.setChecked(False)
+            i.setAutoExclusive(True)
+        for i in self.radioButtons2:
+            i.setAutoExclusive(False)
+            i.setChecked(False)
+            i.setAutoExclusive(True)
+        self.textBox.setPlainText('')
+
 
     def writeToCSV(self):
         with open(os.getcwd() + '/data.csv', mode='a') as data:
@@ -176,7 +193,7 @@ class MainWindow(QMainWindow):
             data_writer.writerow([time,activity,valence,arousal,notes])
             self.hide()
 
-    def file_save(self):
+    def saveCSV(self):
         name = QFileDialog.getSaveFileName(self, 'Salva dati', os.getcwd(), 'CSV(*.csv)')
         shutil.copyfile(os.getcwd() + '/data.csv', name[0])
 
@@ -185,6 +202,7 @@ class QLabelLink(QLabel):
     clicked=pyqtSignal()
     def __init__(self, parent=None):
         QLabel.__init__(self, parent)
+        self.setStyleSheet("color: blue; text-decoration: underline;")
 
     def mousePressEvent(self, ev):
         self.clicked.emit()
@@ -198,8 +216,7 @@ if __name__ == "__main__":
 
     timer = QTimer()
     timer.timeout.connect(mw.show)
-    timer.start(1000*10)
+    timer.start(1000*60*60)
 
-    app.exec()
-    sys.exit(1)
+    sys.exit(app.exec())
 
