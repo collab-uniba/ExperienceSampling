@@ -2,9 +2,10 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-import os, time
+import os, sys, time, csv, datetime, shutil
 
 class MainWindow(QMainWindow):
+
     def __init__(self):
         QMainWindow.__init__(self)
         self.setWindowTitle("Experience Sampling")
@@ -19,7 +20,10 @@ class MainWindow(QMainWindow):
         label1.setAlignment(Qt.AlignCenter)
         label1.setStyleSheet("font-size: 12pt; font-weight: bold;")
         layout.addWidget(label1)
-        layout.addWidget(QComboBox(), 0, Qt.AlignHCenter)
+        self.combobox1 = QComboBox()
+        layout.addWidget(self.combobox1, 0, Qt.AlignHCenter)
+        self.combobox1.addItems(['', 'Coding', 'Taking a break', 'Debugging'])
+        self.combobox1.model().item(0).setEnabled(False)
 
         layout.addItem(QSpacerItem(25, 25, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
@@ -49,9 +53,9 @@ class MainWindow(QMainWindow):
         [feel1ImgLayout.addWidget(i, 0, Qt.AlignCenter) for i in images1]
 
         #radio buttons
-        radioButtons1 = []
-        [radioButtons1.append(QRadioButton(str(i))) for i in range(1,10)] 
-        [feel1RadioLayout.addWidget(i) for i in radioButtons1]
+        self.radioButtons1 = []
+        [self.radioButtons1.append(QRadioButton(str(i))) for i in range(1,10)] 
+        [feel1RadioLayout.addWidget(i) for i in self.radioButtons1]
 
         label1_1 = QLabel("Very unpleasant")
         feel1LabelLayout.addWidget(label1_1)
@@ -84,9 +88,9 @@ class MainWindow(QMainWindow):
         [feel2ImgLayout.addWidget(i, 0, Qt.AlignCenter) for i in images2]
 
         #radio buttons
-        radioButtons2 = []
-        [radioButtons2.append(QRadioButton(str(i))) for i in range(1,10)] 
-        [feel2RadioLayout.addWidget(i) for i in radioButtons2]
+        self.radioButtons2 = []
+        [self.radioButtons2.append(QRadioButton(str(i))) for i in range(1,10)] 
+        [feel2RadioLayout.addWidget(i) for i in self.radioButtons2]
 
         label2_1 = QLabel("Very calm")
         feel2LabelLayout.addWidget(label2_1)
@@ -103,10 +107,10 @@ class MainWindow(QMainWindow):
         label3 = QLabel('Notes (optional)')
         label3.setStyleSheet("font-size: 10pt; font-weight: bold;")
         layout.addWidget(label3)
-        textBox = QPlainTextEdit()
-        textBox.setFixedHeight(3*textBox.fontMetrics().lineSpacing())
-        layout.addWidget(textBox)
-        textBox.setPlaceholderText("Did you experience anything that might have affected your emotion during the last session?")
+        self.textBox = QPlainTextEdit()
+        self.textBox.setFixedHeight(3*self.textBox.fontMetrics().lineSpacing())
+        layout.addWidget(self.textBox)
+        self.textBox.setPlaceholderText("Did you experience anything that might have affected your emotion during the last session?")
 
         layout.addItem(QSpacerItem(25, 25, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
@@ -114,10 +118,15 @@ class MainWindow(QMainWindow):
         doneLayout = QHBoxLayout()
         layout.addLayout(doneLayout)
         doneLayout.addWidget(QLabel())
-        button1 = QPushButton("Done")
-        doneLayout.addWidget(button1,0,Qt.AlignHCenter)
-        label4 = QLabel("Export to csv...")
+        self.button1 = QPushButton("Done")
+        self.button1.clicked.connect(self.writeToCSV)
+        doneLayout.addWidget(self.button1,0,Qt.AlignHCenter)
+        label4 = QLabelLink("Export to csv...")
+        label4.setStyleSheet("color: blue; text-decoration: underline;")
         label4.setAlignment(Qt.AlignRight)
+
+        label4.clicked.connect(self.file_save)
+
         doneLayout.addWidget(label4)
 
         #tray icon
@@ -142,11 +151,46 @@ class MainWindow(QMainWindow):
         event.ignore()
         self.hide()
 
+    def writeToCSV(self):
+        with open(os.getcwd() + '/data.csv', mode='a') as data:
+            data_writer = csv.writer(data, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+
+            time = datetime.datetime.now().replace(microsecond=0)
+            activity = self.combobox1.currentText()
+            notes = self.textBox.toPlainText()
+            
+            valence = ''
+            j = 0
+            for i in self.radioButtons1:
+                j += 1
+                if i.isChecked():
+                    valence = i.text()
+
+            arousal = ''
+            j = 0
+            for i in self.radioButtons2:
+                j += 1
+                if i.isChecked():
+                    arousal = i.text()
+
+            data_writer.writerow([time,activity,valence,arousal,notes])
+            self.hide()
+
+    def file_save(self):
+        name = QFileDialog.getSaveFileName(self, 'Salva dati', os.getcwd(), 'CSV(*.csv)')
+        shutil.copyfile(os.getcwd() + '/data.csv', name[0])
+
+
+class QLabelLink(QLabel):
+    clicked=pyqtSignal()
+    def __init__(self, parent=None):
+        QLabel.__init__(self, parent)
+
+    def mousePressEvent(self, ev):
+        self.clicked.emit()
+
+
 if __name__ == "__main__":
-    import sys
-    
-    def tick():
-        print("tick")
 
     app = QApplication(sys.argv)
     mw = MainWindow()
