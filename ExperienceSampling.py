@@ -216,7 +216,7 @@ class MainWindow(QMainWindow):
 
         self.filepath = os.path.join(os.getcwd(), datetime.date.today().isoformat() + '.csv')
 
-        with open(self.filepath, mode='a') as data:
+        with open(self.filepath, mode='a', newline='') as data:
             data_writer = csv.writer(data, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
             submitTime = int(time.time())
