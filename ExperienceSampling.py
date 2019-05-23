@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-import os, sys, time, csv, datetime, shutil
+import os, sys, time, csv, datetime, shutil, platform
 
 class MainWindow(QMainWindow):
 
@@ -272,8 +272,16 @@ def resource_path(relative_path):
 
 if __name__ == "__main__":
 
+    IS_WINDOWS = os.name == 'nt' or platform.system() == 'Windows' or 'cygwin' in platform.system().lower()
+
+    if IS_WINDOWS:
+        import ctypes
+        myappid = u'h3r0n.PersonalAnalytics.ExperienceSampling.1' # arbitrary string
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+
     app = QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(False)
+    app.setWindowIcon(QIcon(resource_path("icons/status.png")))
     mw = MainWindow(60)
     mw.show()
 
