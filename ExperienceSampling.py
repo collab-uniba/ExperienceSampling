@@ -35,7 +35,7 @@ class MainWindow(QMainWindow):
         self.combobox1.addItems(['', 'Coding', 'Taking a break', 'Debugging'])
         self.combobox1.model().item(0).setEnabled(False)
 
-        layout.addItem(QSpacerItem(25, 25, QSizePolicy.Minimum, QSizePolicy.Expanding))
+        layout.addItem(QSpacerItem(25, 25, QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         #howDoYouFeel1
         label2 = QLabel('How do you feel right now?')
@@ -113,18 +113,18 @@ class MainWindow(QMainWindow):
         label2_3.setAlignment(Qt.AlignRight)
         feel2LabelLayout.addWidget(label2_3)
 
-        layout.addItem(QSpacerItem(25, 25, QSizePolicy.Minimum, QSizePolicy.Expanding))
+        layout.addItem(QSpacerItem(25, 25, QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         #notes
         label3 = QLabel('Notes (optional)')
         label3.setStyleSheet("font-size: 10pt; font-weight: bold;")
         layout.addWidget(label3)
         self.textBox = QPlainTextEdit()
-        self.textBox.setFixedHeight(3*self.textBox.fontMetrics().lineSpacing())
+        self.textBox.setMinimumHeight(3*self.textBox.fontMetrics().lineSpacing())
         layout.addWidget(self.textBox)
         self.textBox.setPlaceholderText("Did you experience anything that might have affected your emotion during the last session?")
 
-        layout.addItem(QSpacerItem(25, 25, QSizePolicy.Minimum, QSizePolicy.Expanding))
+        layout.addItem(QSpacerItem(25, 25, QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         #footer
         doneLayout = QHBoxLayout()
