@@ -279,6 +279,8 @@ if __name__ == "__main__":
         myappid = u'h3r0n.PersonalAnalytics.ExperienceSampling.1' # arbitrary string
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
+    QCoreApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
+
     app = QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(False)
     app.setWindowIcon(QIcon(resource_path("icons/status.png")))
