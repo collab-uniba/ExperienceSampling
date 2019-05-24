@@ -119,7 +119,7 @@ class MainWindow(QMainWindow):
         label3 = QLabel('Notes (optional)')
         label3.setStyleSheet("font-size: 10pt; font-weight: bold;")
         layout.addWidget(label3)
-        self.textBox = QPlainTextEdit()
+        self.textBox = QPlainTextEditSmall()
         self.textBox.setMinimumHeight(3*self.textBox.fontMetrics().lineSpacing())
         layout.addWidget(self.textBox)
         self.textBox.setPlaceholderText("Did you experience anything that might have affected your emotion during the last session?")
@@ -259,6 +259,16 @@ class QLabelLink(QLabel):
 
     def mousePressEvent(self, ev):
         self.clicked.emit()
+
+class QPlainTextEditSmall(QPlainTextEdit):
+    def __init__(self, parent=None):
+        QPlainTextEdit.__init__(self, parent)
+    
+    def sizeHint(self):
+        return QSize(1,1)
+    
+    def minimumSizeHint(self):
+        return QSize(1,1)
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
