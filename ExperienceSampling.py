@@ -4,13 +4,13 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-import os, sys, time, csv, datetime, shutil, platform
+import os, sys, time, csv, datetime, shutil, platform, appdirs
 
 class MainWindow(QMainWindow):
 
     def __init__(self, time=60):
 
-        self.filepath = os.path.join(os.getcwd(), datetime.date.today().isoformat() + '.csv')
+        self.filepath = os.path.join(appdirs.user_data_dir('ExperienceSampling', 'UniBA'), 'data.csv')
 
         self.timerEnabled = True
         self.timeout = time
@@ -214,7 +214,10 @@ class MainWindow(QMainWindow):
 
     def writeToCSV(self):
 
-        self.filepath = os.path.join(os.getcwd(), datetime.date.today().isoformat() + '.csv')
+        if not os.path.exists('my_folder'):
+            os.makedirs(appdirs.user_data_dir('ExperienceSampling', 'UniBA'))
+
+        self.filepath = os.path.join(appdirs.user_data_dir('ExperienceSampling', 'UniBA'), 'data.csv')
 
         with open(self.filepath, mode='a', newline='') as data:
             data_writer = csv.writer(data, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
@@ -242,7 +245,8 @@ class MainWindow(QMainWindow):
 
     def saveCSV(self):
         name = QFileDialog.getSaveFileName(self, 'Salva dati', os.getcwd(), 'CSV(*.csv)')
-        shutil.copyfile(self.filepath, name[0])
+        if name[0]:      
+            shutil.copyfile(self.filepath, name[0])
 
     def setTimer(self):
         i, okPressed = QInputDialog.getInt(self, "Set timer","Minutes:", self.timeout, 0, 100, 1)
@@ -281,7 +285,7 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 if __name__ == "__main__":
-
+    
     IS_WINDOWS = os.name == 'nt' or platform.system() == 'Windows' or 'cygwin' in platform.system().lower()
 
     if IS_WINDOWS:

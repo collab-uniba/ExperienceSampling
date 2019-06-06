@@ -3,7 +3,7 @@
 
 L'applicazione di **experience sampling** mostra la sua finestra principale ogni 60 minuti (di default). Quando la finestra viene chiusa, l'applicazione rimane in esecuzione nella system tray. Dalla system tray è possibile in ogni momento richiamare la finestra, uscire dal programma e abilitare, disabilitare e impostare il timer.
 
-I dati inseriti (insieme con il timestamp di apertura della finestra e il timestamp di invio del form) vengono salvati in file CSV (il cui nome contiene la data, esempio: 2019-12-22.csv) che è possibile copiare in un'altra directory direttamente dall'applicazione.
+I dati inseriti (insieme con il timestamp di apertura della finestra e il timestamp di invio del form) vengono salvati in database che è possibile esportare in formato CSV.
 
 L'applicazione è scritta in Python 3, dipende unicamente dalle librerie Qt5 ed è, pertanto, **multipiattaforma**. È stata testata su Windows e Linux. Tutte le icone provengono dal repository https://github.com/collab-uniba/PersonalAnalytics/tree/field_study_merge
 
@@ -28,7 +28,10 @@ Esempio di file csv:
 
 # Compilazione
 
-È necessario avere le librerie PyQt5 installate e pyinstaller per Python 3.
+È necessario avere installate le seguenti librerie per Python 3:
+ - PyQt5
+ - pyinstaller
+ - appdirs
 
 Per generare l'eseguibile Linux, eseguire in un ambiente Linux il file `build-linux.sh`. L'eseguibile generato verrà salvato nella directory `dist/`.
 
