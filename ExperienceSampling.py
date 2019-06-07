@@ -3,12 +3,15 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-
+import SpreadSheetWriter as SW
 import os, sys, time, csv, datetime, shutil, platform, appdirs
 
 class MainWindow(QMainWindow):
 
     def __init__(self, time=60):
+
+        #spreadsheet
+        self.spreadSheetIstance = SW.SpreadSheetWriterClass()
 
         self.filepath = os.path.join(appdirs.user_data_dir('ExperienceSampling', 'UniBA'), 'data.csv')
 
@@ -215,7 +218,10 @@ class MainWindow(QMainWindow):
     def writeToCSV(self):
 
         if not os.path.exists('my_folder'):
-            os.makedirs(appdirs.user_data_dir('ExperienceSampling', 'UniBA'))
+            try:
+                os.makedirs(appdirs.user_data_dir('ExperienceSampling', 'UniBA'))
+            except FileExistsError:
+                print("File Exist alredy")
 
         self.filepath = os.path.join(appdirs.user_data_dir('ExperienceSampling', 'UniBA'), 'data.csv')
 
@@ -239,7 +245,10 @@ class MainWindow(QMainWindow):
                 j += 1
                 if i.isChecked():
                     arousal = i.text()
-
+            try:
+                self.spreadSheetIstance.writeOnsheet([self.openTime,submitTime,activity,valence,arousal,notes])
+            except:
+                print("scrittura su drive fallita")
             data_writer.writerow([self.openTime,submitTime,activity,valence,arousal,notes])
             self.hide()
 
