@@ -141,7 +141,7 @@ class MainWindow(QMainWindow):
 
         #tray icon
         self.tray_icon = QSystemTrayIcon(self)
-        self.tray_icon.setIcon(QIcon(resource_path("icons/status.png")))
+        self.tray_icon.setIcon(QIcon(resource_path("icons/tray.png")))
         
         #tray logic
         show_action = QAction("Show", self)

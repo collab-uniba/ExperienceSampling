@@ -94,8 +94,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     print(QApplication.desktop().availableGeometry())
-
-    app.setWindowIcon(QIcon(resource_path("icons/status.png")))
+    
     plt = Plot()
     plt.show()
 

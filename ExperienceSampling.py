@@ -19,7 +19,7 @@ if __name__ == "__main__":
 
     app = QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(False)
-    app.setWindowIcon(QIcon(resource_path("icons/status.png")))
+    app.setWindowIcon(QIcon(resource_path("icons/taskbar.png")))
     mw = MainWindow(60)
     mw.show()
 

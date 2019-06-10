@@ -74,7 +74,6 @@ if __name__ == "__main__":
 
     app = QApplication(sys.argv)
 
-    app.setWindowIcon(QIcon(resource_path("icons/status.png")))
     ntfy = Notification()
     ntfy.show()
 
