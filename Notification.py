@@ -41,14 +41,14 @@ class Notification(QMainWindow):
         layout.addLayout(answerLayout)
 
         self.button1 = QPushButton("Dismiss")
-        self.button2 = QPushButton("Postpone: 60 min")
+        self.button2 = QPushButton("Postpone: " + str(self.app.postponeTime) + " min")
         self.button1.clicked.connect(self.dismissAction)
         self.button2.clicked.connect(self.postponeAction)
         
         self.slider = QSlider(Qt.Horizontal)
         self.slider.setMinimum(5)
         self.slider.setMaximum(120)
-        self.slider.setValue(60)
+        self.slider.setValue(self.app.postponeTime)
         self.slider.valueChanged.connect(self.sliderChanged)
 
         answerLayout.addWidget(self.button1)
@@ -106,6 +106,11 @@ Arcangelo Saracino (Arkango)
         x = screen.width() - self.width()
         self.move(x, 150)
 
+    def showEvent(self,event):
+        self.app.stopPollTimer()
+        self.app.stopPostponeTimer()
+        self.show()
+
     def quitEvent(self):
         self.tray_icon.hide()
         qApp.quit()
@@ -134,6 +139,7 @@ Arcangelo Saracino (Arkango)
     def postponeAction(self):
         self.hide()
         self.app.startPostponeTimer()
+        #self.app.setPollTimer()
 
     def exportAction(self):
         self.app.exportCSV()

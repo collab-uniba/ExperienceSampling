@@ -137,12 +137,10 @@ class Poll(QMainWindow):
         self.button1.clicked.connect(self.submitForm)
         self.button1.setEnabled(False)
         layout.addWidget(self.button1,0,Qt.AlignHCenter)
-
-  
+        
 
     def showEvent(self, event):
         self.opened = int(time.time())
-        self.app.stopPollTimer()
         self.show()
 
     def closeEvent(self, event):

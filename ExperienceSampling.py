@@ -45,12 +45,11 @@ class ExperienceSampling(QApplication):
         self.pollTimer.timeout.connect(self.notification.show)
         self.postponeTimer.timeout.connect(self.notification.show)
 
-        self.startPollTimer()
+        #self.startPollTimer()
 
-        # debug
         #print(homePath())
         #self.poll.show()
-        #self.notification.show()
+        self.notification.show()
 
     def minutes(self):
         if self.debug==True:
@@ -72,6 +71,9 @@ class ExperienceSampling(QApplication):
 
     def startPostponeTimer(self):
         self.postponeTimer.start(self.postponeTime*1000*self.minutes())
+    
+    def stopPostponeTimer(self):
+        self.postponeTimer.stop()
 
     def showPoll(self):
         self.poll.show()
@@ -101,6 +103,6 @@ class ExperienceSampling(QApplication):
 
 if __name__ == "__main__":
 
-    app = ExperienceSampling(pollTime=1, debug=True)
+    app = ExperienceSampling(pollTime=3, postponeTime=5, debug=True)
     sys.exit(app.exec_())
 
