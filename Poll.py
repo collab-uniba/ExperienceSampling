@@ -6,20 +6,22 @@ import os, sys, time, csv, datetime, shutil, platform, appdirs
 
 from Utility import *
 
-class MainWindow(QMainWindow):
+class Poll(QMainWindow):
 
-    def __init__(self, time=60):
+    def __init__(self, app):
+
+        self.app = app
 
         self.filepath = os.path.join(appdirs.user_data_dir('ExperienceSampling', 'UniBA'), 'data.csv')
-
-        self.timerEnabled = True
-        self.timeout = time
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.show)
 
         QMainWindow.__init__(self)
         self.setWindowTitle("Experience Sampling")
 
+        # disable titlebar buttons, always on top
+        self.setWindowFlags(Qt.Window | Qt.WindowTitleHint | Qt.CustomizeWindowHint | Qt.WindowStaysOnTopHint)
+
+
+        # ================ layout ================
         central_widget = QWidget(self)
         self.setCentralWidget(central_widget)
         layout = QVBoxLayout()
@@ -32,8 +34,9 @@ class MainWindow(QMainWindow):
         layout.addWidget(label1)
         self.combobox1 = QComboBox()
         layout.addWidget(self.combobox1, 0, Qt.AlignHCenter)
-        self.combobox1.addItems(['Coding', 'Bugfixing', 'Testing', 'Design', 'Meeting', 'Email', 'Helping', 'Networking', 'Learning', 'Administrative tasks', 'Documentation'])
+        self.combobox1.addItems(['', 'Coding', 'Bugfixing', 'Testing', 'Design', 'Meeting', 'Email', 'Helping', 'Networking', 'Learning', 'Administrative tasks', 'Documentation'])
         self.combobox1.model().item(0).setEnabled(False)
+        self.combobox1.activated.connect(self.checkPollComplete)
 
         layout.addItem(QSpacerItem(25, 25, QSizePolicy.Minimum, QSizePolicy.Fixed))
 
@@ -64,7 +67,8 @@ class MainWindow(QMainWindow):
 
         #radio buttons
         self.radioButtons1 = []
-        [self.radioButtons1.append(QRadioButton(str(i))) for i in range(1,10)] 
+        [self.radioButtons1.append(QRadioButton(str(i))) for i in range(1,10)]
+        [i.clicked.connect(self.checkPollComplete) for i in self.radioButtons1]
         [feel1RadioLayout.addWidget(i) for i in self.radioButtons1]
 
         #labels
@@ -100,7 +104,8 @@ class MainWindow(QMainWindow):
 
         #radio buttons
         self.radioButtons2 = []
-        [self.radioButtons2.append(QRadioButton(str(i))) for i in range(1,10)] 
+        [self.radioButtons2.append(QRadioButton(str(i))) for i in range(1,10)]
+        [i.clicked.connect(self.checkPollComplete) for i in self.radioButtons2]
         [feel2RadioLayout.addWidget(i) for i in self.radioButtons2]
 
         #labels
@@ -127,50 +132,16 @@ class MainWindow(QMainWindow):
         layout.addItem(QSpacerItem(25, 25, QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         #footer
-        doneLayout = QHBoxLayout()
-        layout.addLayout(doneLayout)
-        self.label5 = QLabel()
-        doneLayout.addWidget(self.label5)
         self.button1 = QPushButton("Done")
-        self.button1.clicked.connect(self.writeToCSV)
-        doneLayout.addWidget(self.button1,0,Qt.AlignHCenter)
-        label4 = QLabelLink("Export to csv...")
-        label4.setAlignment(Qt.AlignRight)
-        label4.clicked.connect(self.saveCSV)
-        doneLayout.addWidget(label4)
+        self.button1.clicked.connect(self.submitForm)
+        self.button1.setEnabled(False)
+        layout.addWidget(self.button1,0,Qt.AlignHCenter)
 
-        #tray icon
-        self.tray_icon = QSystemTrayIcon(self)
-        self.tray_icon.setIcon(QIcon(resource_path("icons/tray.png")))
-        
-        #tray logic
-        show_action = QAction("Show", self)
-        hide_action = QAction("Hide", self)
-        set_action = QAction("Set timer", self)
-        start_action = QAction("Enable timer", self)
-        stop_action = QAction("Disable timer", self)
-        quit_action = QAction("Exit", self)
-        show_action.triggered.connect(self.show)
-        hide_action.triggered.connect(self.hide)
-        set_action.triggered.connect(self.setTimer)
-        start_action.triggered.connect(self.enableTimer)
-        stop_action.triggered.connect(self.disableTimer)
-        quit_action.triggered.connect(qApp.quit)
-        tray_menu = QMenu()
-        tray_menu.addAction(show_action)
-        tray_menu.addAction(hide_action)
-        tray_menu.addAction(set_action)
-        tray_menu.addAction(start_action)
-        tray_menu.addAction(stop_action)
-        tray_menu.addAction(quit_action)
-        self.tray_icon.setContextMenu(tray_menu)
-        self.tray_icon.show()
-
-        self.enableTimer()
+  
 
     def showEvent(self, event):
-        self.openTime = int(time.time())
-        self.timer.stop()
+        self.opened = int(time.time())
+        self.app.stopPollTimer()
         self.show()
 
     def closeEvent(self, event):
@@ -179,7 +150,7 @@ class MainWindow(QMainWindow):
         self.hide()
 
     def hideEvent(self,event):
-        self.startTimer()
+        self.app.startPollTimer()
         self.resetForm()
         self.hide()
         
@@ -194,75 +165,44 @@ class MainWindow(QMainWindow):
             i.setChecked(False)
             i.setAutoExclusive(True)
         self.textBox.setPlainText('')
+        self.button1.setEnabled(False)
 
-    def startTimer(self):
-        if self.timerEnabled and self.timeout>0:
-            self.timer.start(self.timeout*1000*60)
-
-    def enableTimer(self):
-        if self.timeout>0:
-            self.timerEnabled = True
-            self.startTimer()
-            self.label5.setText("Timer: " + str(self.timeout) + " min")
-        else:
-            self.disableTimer()
-
-    def disableTimer(self):
-        self.timerEnabled = False
-        self.timer.stop()
-        self.label5.setText("Timer: disabled")
-
-    def writeToCSV(self):
-
-        if not os.path.exists('my_folder'):
-            os.makedirs(appdirs.user_data_dir('ExperienceSampling', 'UniBA'))
-
-        #self.filepath = os.path.join(appdirs.user_data_dir('ExperienceSampling', 'UniBA'), 'data.csv')
-
-        with open(self.filepath, mode='a', newline='') as data:
-            data_writer = csv.writer(data, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-
-            submitTime = int(time.time())
-            activity = self.combobox1.currentText()
-            notes = self.textBox.toPlainText()
-            
-            valence = ''
-            j = 0
-            for i in self.radioButtons1:
-                j += 1
+    def checkPollComplete(self):
+        comboValid = self.combobox1.currentText() != ''
+        
+        radio1Valid = False
+        for i in self.radioButtons1:
                 if i.isChecked():
-                    valence = i.text()
+                    radio1Valid = True
 
-            arousal = ''
-            j = 0
-            for i in self.radioButtons2:
-                j += 1
+        radio2Valid = False
+        for i in self.radioButtons2:
                 if i.isChecked():
-                    arousal = i.text()
+                    radio2Valid = True
 
-            data_writer.writerow([self.openTime,submitTime,activity,valence,arousal,notes])
-            self.hide()
+        if comboValid and radio1Valid and radio2Valid:
+            self.button1.setEnabled(True)
+      
+    def submitForm(self):
+        closed = int(time.time())
+        activity = self.combobox1.currentText()
 
-    def saveCSV(self):
-        name = QFileDialog.getSaveFileName(self, 'Salva dati', os.getcwd(), 'CSV(*.csv)')
-        if name[0]:      
-            shutil.copyfile(self.filepath, name[0])
+        valence = ''
+        for i in self.radioButtons1:
+            if i.isChecked():
+                valence = i.text()
+    
+        arousal = ''
+        for i in self.radioButtons2:
+            if i.isChecked():
+                arousal = i.text()
 
-    def setTimer(self):
-        i, okPressed = QInputDialog.getInt(self, "Set timer","Minutes:", self.timeout, 0, 100, 1)
-        if okPressed and i>0:
-            self.timeout = i
-            self.disableTimer()
-            self.enableTimer()
+        note = self.textBox.toPlainText()
 
-class QLabelLink(QLabel):
-    clicked=pyqtSignal()
-    def __init__(self, parent=None):
-        QLabel.__init__(self, parent)
-        self.setStyleSheet("color: blue; text-decoration: underline;")
+        poll = PollResult(self.opened, closed, activity, valence, arousal, note)
+        self.app.writeToCSV(poll)
+        self.hide()
 
-    def mousePressEvent(self, ev):
-        self.clicked.emit()
 
 class QPlainTextEditSmall(QPlainTextEdit):
     def __init__(self, parent=None):
@@ -273,4 +213,14 @@ class QPlainTextEditSmall(QPlainTextEdit):
     
     def minimumSizeHint(self):
         return QSize(1,1)
+
+class PollResult:
+    def __init__(self, opened, closed, activity, valence, arousal, note=''):
+        self.opened = opened
+        self.closed = closed        
+        self.activity = activity
+        self.valence = valence
+        self.arousal = arousal
+        self.note = note
+
 

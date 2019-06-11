@@ -4,24 +4,90 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-import os, sys, time, csv, datetime, shutil, platform, appdirs
+#import os, sys, time, csv, datetime, shutil, platform, appdirs
+import sys, csv, shutil
 
-from MainWindow import *
+from Poll import Poll
+from Notification import Notification
+from Plot import Plot
+from Utility import *
+
+class ExperienceSampling(QApplication):
+
+    def __init__(self, pollTime=60, postponeTime=60, debug=False):
+
+        self.debug = debug
+
+        QCoreApplication.setAttribute(Qt.AA_EnableHighDpiScaling)   # HiDPI support
+        MSWindowsFix()  # MS Windows taskbar fix
+
+        # configure application
+        QApplication.__init__(self, sys.argv)
+        self.setQuitOnLastWindowClosed(False)
+        self.setWindowIcon(QIcon(resource_path("icons/taskbar.png")))
+
+        # init timers
+        self.pollTime = pollTime
+        self.pollTimer = QTimer()
+        self.pollTimerEnabled = True
+        self.postponeTime = postponeTime
+        self.postponeTimer = QTimer()
+
+        # init windows
+        self.notification = Notification(self)
+        self.poll = Poll(self)
+        self.plot = Plot(self)
+
+        # set timer actions
+        self.pollTimer.timeout.connect(self.notification.show)
+        self.postponeTimer.timeout.connect(self.notification.show)
+
+        # debug
+        #print(homePath())
+        #self.poll.show()
+        self.notification.show()
+
+    def minutes(self):
+        if self.debug==True:
+            return 1
+        return 60
+
+    def setPollTimer(self,value):
+        self.pollTime = value
+
+    def startPollTimer(self):
+        if self.pollTimerEnabled and self.pollTime>0:
+            self.pollTimer.start(self.pollTime*1000*self.minutes())
+
+    def stopPollTimer(self):
+        self.pollTimer.stop()
+
+    def setPostponeTimer(self,value):
+        self.postponeTime = value
+
+    def startPostponeTimer(self):
+        self.postponeTimer.start(self.postponeTime*1000*self.minutes())
+
+    def showPoll(self):
+        self.poll.show()
+
+    def showPlot(self):
+        self.plot.show()
+
+    def writeToCSV(self, poll):
+        csvDirCheck()
+        with open(csvFilePath(), mode='a', newline='') as data:
+            data_writer = csv.writer(data, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            data_writer.writerow([poll.opened,'','','','POPUP_OPENED',''])
+            data_writer.writerow([poll.closed,poll.activity,poll.valence,poll.arousal,'POPUP_CLOSED',poll.note])
+    
+    def exportCSV(self):
+        name = QFileDialog.getSaveFileName(caption='Salva dati', directory=exportPath(), filter='CSV(*.csv)')
+        if name[0]:      
+            shutil.copyfile(self.filepath, name[0])
 
 if __name__ == "__main__":
 
-    if os.name == 'nt' or platform.system() == 'Windows' or 'cygwin' in platform.system().lower():
-        import ctypes
-        myappid = u'h3r0n.PersonalAnalytics.ExperienceSampling.1' # arbitrary string
-        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
-
-    QCoreApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
-
-    app = QApplication(sys.argv)
-    app.setQuitOnLastWindowClosed(False)
-    app.setWindowIcon(QIcon(resource_path("icons/taskbar.png")))
-    mw = MainWindow(60)
-    mw.show()
-
+    app = ExperienceSampling(debug=True)
     sys.exit(app.exec_())
 

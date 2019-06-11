@@ -8,7 +8,6 @@ import sys, random, matplotlib
 matplotlib.use('Qt5Agg')
 from PyQt5 import QtCore, QtWidgets
 
-from numpy import arange, sin, pi
 import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
@@ -19,12 +18,12 @@ from Utility import *
 
 class Plot(QMainWindow):
 
-    def __init__(self):
+    def __init__(self, app=None):
 
         self.value_changed
 
         QMainWindow.__init__(self)
-        self.setWindowTitle("Russell Circumplex Model")
+        self.setWindowTitle("Retrospective")
 
         central_widget = QWidget(self)
         self.setCentralWidget(central_widget)
@@ -92,8 +91,6 @@ if __name__ == "__main__":
     QCoreApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
 
     app = QApplication(sys.argv)
-
-    print(QApplication.desktop().availableGeometry())
     
     plt = Plot()
     plt.show()
