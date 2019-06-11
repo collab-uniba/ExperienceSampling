@@ -20,6 +20,7 @@ class Poll(QMainWindow):
         # disable titlebar buttons, always on top
         self.setWindowFlags(Qt.Window | Qt.WindowTitleHint | Qt.CustomizeWindowHint | Qt.WindowStaysOnTopHint)
 
+        self.activities = ['', 'Coding', 'Bugfixing', 'Testing', 'Design', 'Meeting', 'Email', 'Helping', 'Networking', 'Learning', 'Administrative tasks', 'Documentation']
 
         # ================ layout ================
         central_widget = QWidget(self)
@@ -34,7 +35,7 @@ class Poll(QMainWindow):
         layout.addWidget(label1)
         self.combobox1 = QComboBox()
         layout.addWidget(self.combobox1, 0, Qt.AlignHCenter)
-        self.combobox1.addItems(['', 'Coding', 'Bugfixing', 'Testing', 'Design', 'Meeting', 'Email', 'Helping', 'Networking', 'Learning', 'Administrative tasks', 'Documentation'])
+        self.combobox1.addItems(self.activities)
         self.combobox1.model().item(0).setEnabled(False)
         self.combobox1.activated.connect(self.checkPollComplete)
 
@@ -201,7 +202,8 @@ class Poll(QMainWindow):
 
         poll = PollResult(self.opened, closed, activity, valence, arousal, note)
         self.app.writeToCSV(poll)
-        self.app.writeToSpreadSheet(poll)
+        #self.app.writeToSpreadSheet(poll)
+        self.app.updatePlot()
         self.hide()
 
 

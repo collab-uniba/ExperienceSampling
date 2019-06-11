@@ -20,8 +20,6 @@ class Plot(QMainWindow):
 
     def __init__(self, app=None):
 
-        self.value_changed
-
         QMainWindow.__init__(self)
         self.setWindowTitle("Retrospective")
 
@@ -30,15 +28,8 @@ class Plot(QMainWindow):
         layout = QHBoxLayout()
         central_widget.setLayout(layout)
         
-        layout.addWidget(MyMplCanvas(self))
-        
-
-    def value_changed(self):
-        value = self.slider.value()
-        self.button2.setText("Postpone: " + str(value) + " min")
-
-    def mousePressEvent(self, ev):
-        print("lol")
+        self.mpl = MyMplCanvas(self)
+        layout.addWidget(self.mpl)
 
 
 class MyMplCanvas(FigureCanvas):
@@ -49,7 +40,7 @@ class MyMplCanvas(FigureCanvas):
         self.axes = fig.add_subplot(111)
         fig.tight_layout()
 
-        self.compute_initial_figure()
+        self.compute_figure()
 
         FigureCanvas.__init__(self, fig)
         self.setParent(parent)
@@ -58,33 +49,40 @@ class MyMplCanvas(FigureCanvas):
         FigureCanvas.updateGeometry(self)
 
 
-    def compute_initial_figure(self):
-
+    def compute_figure(self):
+        
         self.axes.spines['left'].set_position('center')
         self.axes.spines['bottom'].set_position('center')
         self.axes.spines['top'].set_position('center')
         self.axes.spines['right'].set_position('center')
-        
+            
         self.axes.set_xticks([], [])
         self.axes.set_yticks([], [])
         self.axes.set_xlim(0, 10)
         self.axes.set_ylim(0, 10)
 
-        self.axes.text(5, 10.1, 'Aroused', horizontalalignment='center')
-        self.axes.text(5, -.5, 'Not aroused', horizontalalignment='center')
+        self.axes.text(5, 10.1, 'Very excited', horizontalalignment='center')
+        self.axes.text(5, -.5, 'Very calm', horizontalalignment='center')
         self.axes.text(10, 5, 'Pleasant', verticalalignment='center', rotation=90)
         self.axes.text(-.5, 5, 'Unpleasant', verticalalignment='center', rotation=90)
-        
-        x = np.random.randint(1, 10, size=50)
-        y = np.random.randint(1, 10, size=50)
-        
-        hist, xbins,ybins = np.histogram2d(y,x, bins=range(11))
-        X,Y = np.meshgrid(xbins[:-1], ybins[:-1])
-        X = X[hist != 0]; Y = Y[hist != 0]
-        Z   = hist[hist != 0]
-        
-        self.axes.scatter(X, Y, s=Z/Z.max()*100, c = Z/Z.max(), cmap="winter_r", alpha=0.8)
 
+        try:
+            x,y = csv2numpy(csvFilePath())
+            
+            hist, xbins,ybins = np.histogram2d(y,x, bins=range(11))
+            X,Y = np.meshgrid(xbins[:-1], ybins[:-1])
+            X = X[hist != 0]; Y = Y[hist != 0]
+            Z   = hist[hist != 0]
+            
+            self.axes.scatter(X, Y, s=Z/Z.max()*500, c=Z/Z.max(), cmap="winter_r", alpha=0.8)
+        except IOError:
+            pass
+
+    def update_figure(self):
+        
+        self.axes.cla()
+        self.compute_figure()
+        self.draw()
 
 if __name__ == "__main__":
 
