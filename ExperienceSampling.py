@@ -42,10 +42,12 @@ class ExperienceSampling(QApplication):
         self.pollTimer.timeout.connect(self.notification.show)
         self.postponeTimer.timeout.connect(self.notification.show)
 
+        self.startPollTimer()
+
         # debug
         #print(homePath())
         #self.poll.show()
-        self.notification.show()
+        #self.notification.show()
 
     def minutes(self):
         if self.debug==True:
@@ -88,6 +90,6 @@ class ExperienceSampling(QApplication):
 
 if __name__ == "__main__":
 
-    app = ExperienceSampling(debug=True)
+    app = ExperienceSampling(pollTime=1, debug=True)
     sys.exit(app.exec_())
 

@@ -135,15 +135,16 @@ class Notification(QMainWindow):
 
     def setAction(self):
         i, okPressed = QInputDialog.getInt(self, "Set timer","Minutes:", self.app.pollTime, 0, 100, 1)
-        if okPressed and i>1:
+        if okPressed and i>0:
             self.app.setPollTimer(i)
 
     def toggleAction(self):
-        if (self.app.pollTimerEnabled):
+        if self.app.pollTimerEnabled:
+            self.app.pollTimerEnabled = False
             self.app.stopPollTimer()
         else:
+            self.app.pollTimerEnabled = True
             self.app.startPollTimer()
-        self.app.pollTimerEnabled = not self.app.pollTimerEnabled
 
     def updateTray(self):
         if self.app.pollTimerEnabled:
