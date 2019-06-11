@@ -91,7 +91,12 @@ class Notification(QMainWindow):
 
 
     def about(self):
-        QMessageBox.about(self, "About", "test")
+        QMessageBox.about(self, "About",
+        """Experience Sampling, 2019
+        
+Giuseppe Antonio Nanna (h3r0n)
+Arcangelo Saracino (Arkango)
+        """)
 
     def resizeEvent(self, event):
         width = self.width()
