@@ -94,9 +94,18 @@ class ExperienceSampling(QApplication):
 
 
     def exportCSV(self):
-        name = QFileDialog.getSaveFileName(caption='Salva dati', directory=exportPath(), filter='CSV(*.csv)')
-        if name[0]:      
-            shutil.copyfile(csvFilePath(), name[0])
+        if csvFileCheck():
+            name = QFileDialog.getSaveFileName(caption='Salva dati', directory=exportPath(), filter='CSV(*.csv)')
+            if name[0]:      
+                shutil.copyfile(csvFilePath(), name[0])
+        else:
+            msg = QMessageBox()
+            msg.setText("Cannot export to csv")
+            msg.setInformativeText("The database is still empty. Please take the poll at least once.")
+            msg.setWindowTitle("Error")
+            msg.setIcon(QMessageBox.Warning)
+            msg.exec_()
+            
 
     def updatePlot(self):
         self.plot.mpl.update_figure()

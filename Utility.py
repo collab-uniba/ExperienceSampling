@@ -22,6 +22,9 @@ def csvDirCheck():
     if not os.path.exists(csvDirPath()):
         os.makedirs(csvDirPath())
 
+def csvFileCheck():
+    return os.path.exists(csvFilePath())
+
 def csvDirPath():
     return appdirs.user_data_dir('ExperienceSampling', 'UniBA')
 
