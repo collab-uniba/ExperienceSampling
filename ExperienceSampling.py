@@ -11,12 +11,15 @@ from Poll import Poll
 from Notification import Notification
 from Plot import Plot
 from Utility import *
+from SpreadSheetWriter import SpreadSheetWriterClass
 
 class ExperienceSampling(QApplication):
 
     def __init__(self, pollTime=60, postponeTime=60, debug=False):
 
         self.debug = debug
+
+        self.spreadSheetWriter = SpreadSheetWriterClass()
 
         QCoreApplication.setAttribute(Qt.AA_EnableHighDpiScaling)   # HiDPI support
         MSWindowsFix()  # MS Windows taskbar fix
@@ -82,7 +85,12 @@ class ExperienceSampling(QApplication):
             data_writer = csv.writer(data, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             data_writer.writerow([poll.opened,'','','','POPUP_OPENED',''])
             data_writer.writerow([poll.closed,poll.activity,poll.valence,poll.arousal,'POPUP_CLOSED',poll.note])
-    
+
+    def writeToSpreadSheet(self,poll):
+        self.spreadSheetWriter.writeOnsheet([poll.opened, '', '', '', 'POPUP_OPENED', ''])
+        self.spreadSheetWriter.writeOnsheet([poll.closed,poll.activity,poll.valence,poll.arousal,'POPUP_CLOSED',poll.note])
+
+
     def exportCSV(self):
         name = QFileDialog.getSaveFileName(caption='Salva dati', directory=exportPath(), filter='CSV(*.csv)')
         if name[0]:      
