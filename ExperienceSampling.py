@@ -94,7 +94,7 @@ class ExperienceSampling(QApplication):
     def exportCSV(self):
         name = QFileDialog.getSaveFileName(caption='Salva dati', directory=exportPath(), filter='CSV(*.csv)')
         if name[0]:      
-            shutil.copyfile(self.filepath, name[0])
+            shutil.copyfile(csvFilePath(), name[0])
 
     def updatePlot(self):
         self.plot.mpl.update_figure()
