@@ -96,6 +96,9 @@ class ExperienceSampling(QApplication):
         if name[0]:      
             shutil.copyfile(self.filepath, name[0])
 
+    def updatePlot(self):
+        self.plot.mpl.update_figure()
+
 if __name__ == "__main__":
 
     app = ExperienceSampling(pollTime=1, debug=True)
