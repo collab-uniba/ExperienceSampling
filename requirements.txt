@@ -1,0 +1,7 @@
+pyqt5==5.10
+appdirs
+matplotlib
+numpy
+oauth2client
+gspread
+pyinstaller

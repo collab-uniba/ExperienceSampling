@@ -1,1 +1,0 @@
-pyinstaller.exe --onefile --windowed --add-data "icons/*.png;icons" --icon "icons\icon.ico" --paths "C:\Windows\System32\downlevel" ExperienceSampling.py
