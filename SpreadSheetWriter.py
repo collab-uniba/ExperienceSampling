@@ -49,10 +49,12 @@ class SpreadSheetWriterClass:
                 data_writer.writerow([arrayValues[0], arrayValues[1], arrayValues[2], arrayValues[3],arrayValues[4], arrayValues[5]])
 
     def insertFromOffline(self):
-
-        lines = open('toCommit.csv','a+').readlines()
+        file = open('toCommit.csv','a+')
+        lines = file.readlines()
+        file.seek(0)
         for l in lines:
             self.writeOnsheet(l.split(","),False)
+        file.truncate()
         return
 
 
