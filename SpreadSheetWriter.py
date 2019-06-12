@@ -3,6 +3,8 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import Utility as ut
+import sys, csv, shutil
+
 
 class SpreadSheetWriterClass:
     def __init__(self):
@@ -27,13 +29,14 @@ class SpreadSheetWriterClass:
         except:
             return False
 
-    def writeOnsheet(self,arrayValues):
+    def writeOnsheet(self,arrayValues,flag = True):
         if(ut.internet_on()):
             if self.status == False:
                 self.status = self.takeCredentials()
             if self.status2 == False:
                 self.status2 = self.setSheet()
-            self.insertFromOffline()
+            if flag == True:
+                self.insertFromOffline()
             values_list = self.worksheet.col_values(1)
             length = len(values_list) + 1
             self.worksheet.append_row(arrayValues,"RAW")
@@ -41,19 +44,15 @@ class SpreadSheetWriterClass:
             if(self.confirmWrite(length,arrayValues[0]) == False):
                 raise Exception('no value witten')
         else:
-            file = open('toCommit.txt', 'a')
-            stringValues =  ','.join(str(e) for e in arrayValues)
-            file.write(stringValues+"\n")
-            file.close()
+            with open('toCommit.csv', mode='a+', newline='') as data:
+                data_writer = csv.writer(data, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                data_writer.writerow([arrayValues[0], arrayValues[1], arrayValues[2], arrayValues[3],arrayValues[4], arrayValues[5]])
+
     def insertFromOffline(self):
 
-        lines = open('toCommit.txt').readlines()
-        if(len(lines) > 0):
-            line = lines[0]
-            with open('toCommit.txt', 'w') as f:
-                f.writelines(lines[1:])
-                f.close()
-            self.writeOnsheet(line.split(","))
+        lines = open('toCommit.csv','a+').readlines()
+        for l in lines:
+            self.writeOnsheet(l.split(","),False)
         return
 
 
