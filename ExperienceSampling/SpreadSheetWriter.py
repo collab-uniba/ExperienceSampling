@@ -44,12 +44,12 @@ class SpreadSheetWriterClass:
             if(self.confirmWrite(length,arrayValues[0]) == False):
                 raise Exception('no value witten')
         else:
-            with open('toCommit.csv', mode='a+', newline='') as data:
+            with open(ut.toCommitPath(), mode='a+', newline='') as data:
                 data_writer = csv.writer(data, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
                 data_writer.writerow([arrayValues[0], arrayValues[1], arrayValues[2], arrayValues[3],arrayValues[4], arrayValues[5]])
 
     def insertFromOffline(self):
-        file = open('toCommit.csv','a+')
+        file = open(ut.toCommitPath(),'a+')
         lines = file.readlines()
         file.seek(0)
         for l in lines:

@@ -52,7 +52,6 @@ def csv2numpy(file):
 
     return (x,y)
 
-
 def internet_on():
     try:
         response = urlopen('https://www.google.com/', timeout=10)
@@ -70,3 +69,6 @@ def getID():
         with open(os.path.join(csvDirPath(), 'id'), 'w') as file:
             file.write(id)
         return id
+
+def toCommitPath():
+    return os.path.join(csvDirPath(), 'toCommit.csv')
