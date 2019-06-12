@@ -200,7 +200,7 @@ class Poll(QMainWindow):
 
         poll = PollResult(self.opened, closed, activity, valence, arousal, note)
         self.app.writeToCSV(poll)
-        #self.app.writeToSpreadSheet(poll)
+        self.app.writeToSpreadSheet(poll)
         self.app.updatePlot()
         self.hide()
 
