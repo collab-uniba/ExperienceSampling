@@ -1,6 +1,8 @@
 import os, sys, appdirs, platform, csv
 import numpy as np
 from pathlib import Path
+from urllib.request import urlopen
+
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -49,3 +51,11 @@ def csv2numpy(file):
                 y = np.append(y,int(row[3]))
 
     return (x,y)
+
+
+def internet_on():
+    try:
+        response = urlopen('https://www.google.com/', timeout=10)
+        return True
+    except:
+        return False
