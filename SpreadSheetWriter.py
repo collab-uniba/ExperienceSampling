@@ -6,8 +6,8 @@ import Utility as ut
 
 class SpreadSheetWriterClass:
     def __init__(self):
-        self.takeCredentials()
-        self.setSheet()
+        self.status = self.takeCredentials()
+        self.status2 = self.setSheet()
 
     def takeCredentials(self):
         try:
@@ -29,14 +29,32 @@ class SpreadSheetWriterClass:
 
     def writeOnsheet(self,arrayValues):
         if(ut.internet_on()):
-            self.takeCredentials()
-            self.setSheet()
+            if self.status == False:
+                self.status = self.takeCredentials()
+            if self.status2 == False:
+                self.status2 = self.setSheet()
+            self.insertFromOffline()
             values_list = self.worksheet.col_values(1)
             length = len(values_list) + 1
             self.worksheet.append_row(arrayValues,"RAW")
 
             if(self.confirmWrite(length,arrayValues[0]) == False):
                 raise Exception('no value witten')
+        else:
+            file = open('toCommit.txt', 'a')
+            stringValues =  ','.join(str(e) for e in arrayValues)
+            file.write(stringValues+"\n")
+            file.close()
+    def insertFromOffline(self):
+
+        lines = open('toCommit.txt').readlines()
+        if(len(lines) > 0):
+            line = lines[0]
+            with open('toCommit.txt', 'w') as f:
+                f.writelines(lines[1:])
+                f.close()
+            self.writeOnsheet(line.split(","))
+        return
 
 
 
