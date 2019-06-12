@@ -13,7 +13,7 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
 
-from Utility import *
+from ExperienceSampling.Utility import *
 
 
 class Plot(QMainWindow):
@@ -83,14 +83,3 @@ class MyMplCanvas(FigureCanvas):
         self.axes.cla()
         self.compute_figure()
         self.draw()
-
-if __name__ == "__main__":
-
-    QCoreApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
-
-    app = QApplication(sys.argv)
-    
-    plt = Plot()
-    plt.show()
-
-    sys.exit(app.exec_())

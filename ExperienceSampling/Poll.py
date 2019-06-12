@@ -4,7 +4,7 @@ from PyQt5.QtGui import *
 
 import os, sys, time, csv, datetime, shutil, platform, appdirs
 
-from Utility import *
+from ExperienceSampling.Utility import *
 
 class Poll(QMainWindow):
 

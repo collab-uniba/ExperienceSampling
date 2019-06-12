@@ -7,7 +7,7 @@ from PyQt5.QtGui import *
 
 import sys, os
 
-from Utility import *
+from ExperienceSampling.Utility import *
 
 class Notification(QMainWindow):
 

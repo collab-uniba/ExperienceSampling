@@ -4,16 +4,15 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-#import os, sys, time, csv, datetime, shutil, platform, appdirs
 import sys, csv, shutil
 
-from Poll import Poll
-from Notification import Notification
-from Plot import Plot
-from Utility import *
-from SpreadSheetWriter import SpreadSheetWriterClass
+from ExperienceSampling.Poll import Poll
+from ExperienceSampling.Notification import Notification
+from ExperienceSampling.Plot import Plot
+from ExperienceSampling.Utility import *
+from ExperienceSampling.SpreadSheetWriter import SpreadSheetWriterClass
 
-class ExperienceSampling(QApplication):
+class App(QApplication):
 
     def __init__(self, pollTime=60, postponeTime=60, debug=False):
 
@@ -45,11 +44,7 @@ class ExperienceSampling(QApplication):
         self.pollTimer.timeout.connect(self.notification.show)
         self.postponeTimer.timeout.connect(self.notification.show)
 
-        #self.startPollTimer()
-
-        #print(homePath())
-        #self.poll.show()
-        self.notification.show()
+        self.startPollTimer()
 
     def minutes(self):
         if self.debug==True:
@@ -109,9 +104,3 @@ class ExperienceSampling(QApplication):
 
     def updatePlot(self):
         self.plot.mpl.update_figure()
-
-if __name__ == "__main__":
-
-    app = ExperienceSampling(pollTime=3, postponeTime=5, debug=True)
-    sys.exit(app.exec_())
-

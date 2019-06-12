@@ -2,7 +2,7 @@
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-import Utility as ut
+import ExperienceSampling.Utility as ut
 import sys, csv, shutil
 
 
