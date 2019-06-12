@@ -62,7 +62,7 @@ class Poll(QMainWindow):
         for i in range(1,6):
             j = QLabel()
             images1.append(j)
-            j.setPixmap(QPixmap(resource_path("icons/V" + str(i) + ".png")))
+            j.setPixmap(QPixmap(resource_path("data/V" + str(i) + ".png")))
 
         [feel1ImgLayout.addWidget(i, 0, Qt.AlignCenter) for i in images1]
 
@@ -99,7 +99,7 @@ class Poll(QMainWindow):
         for i in range(1,6):
             j = QLabel()
             images2.append(j)
-            j.setPixmap(QPixmap(resource_path("icons/A" + str(i) + ".png")))
+            j.setPixmap(QPixmap(resource_path("data/A" + str(i) + ".png")))
 
         [feel2ImgLayout.addWidget(i, 0, Qt.AlignCenter) for i in images2]
 

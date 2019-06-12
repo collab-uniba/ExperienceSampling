@@ -27,7 +27,7 @@ class ExperienceSampling(QApplication):
         # configure application
         QApplication.__init__(self, sys.argv)
         self.setQuitOnLastWindowClosed(False)
-        self.setWindowIcon(QIcon(resource_path("icons/taskbar.png")))
+        self.setWindowIcon(QIcon(resource_path("data/taskbar.png")))
 
         # init timers
         self.pollTime = pollTime

@@ -28,7 +28,7 @@ class Notification(QMainWindow):
         central_widget.setLayout(layout)
 
         image = QLabel()
-        pm = QPixmap(resource_path("icons/notify.png"))
+        pm = QPixmap(resource_path("data/notify.png"))
         pm = pm.scaled(64,64)
         image.setPixmap(pm)
         layout.addWidget(image, 0, Qt.AlignCenter)
@@ -58,7 +58,7 @@ class Notification(QMainWindow):
         # ================ trayicon ================
 
         self.tray_icon = QSystemTrayIcon(self)
-        self.tray_icon.setIcon(QIcon(resource_path("icons/tray.png")))
+        self.tray_icon.setIcon(QIcon(resource_path("data/tray.png")))
         tray_menu = QMenu()
         self.tray_icon.setContextMenu(tray_menu)
         

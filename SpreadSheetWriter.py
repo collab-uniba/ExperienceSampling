@@ -15,7 +15,7 @@ class SpreadSheetWriterClass:
         try:
             scope = ['https://spreadsheets.google.com/feeds',
                      'https://www.googleapis.com/auth/drive']
-            credentials = ServiceAccountCredentials.from_json_keyfile_name('build/ExperienceSampling/credentials.json',
+            credentials = ServiceAccountCredentials.from_json_keyfile_name(ut.resource_path('data/credentials.json'),
                                                                            scope)
             self.gc = gspread.authorize(credentials)
         except:
