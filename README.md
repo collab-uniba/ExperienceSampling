@@ -1,38 +1,32 @@
-# Personal Analytics
-*Submission per l'Emotions Contest, Uniba*
+# ExperienceSampling
 
-L'applicazione di **experience sampling** mostra la sua finestra principale ogni 60 minuti (di default). Quando la finestra viene chiusa, l'applicazione rimane in esecuzione nella system tray. Dalla system tray è possibile in ogni momento richiamare la finestra, uscire dal programma e abilitare, disabilitare e impostare il timer.
+L'applicazione mostra una notifica ogni 60 minuti (di default). Cliccando sulla notifica è possibile accedere ad un form in cui l'utente può inserire le emozioni riportate durante la giornata.
 
-I dati inseriti (insieme con il timestamp di apertura della finestra e il timestamp di invio del form) vengono salvati in database che è possibile esportare in formato CSV.
+Quando la finestra viene chiusa, l'applicazione rimane in attesa nella system tray.
 
-L'applicazione è scritta in Python 3, dipende unicamente dalle librerie Qt5 ed è, pertanto, **multipiattaforma**. È stata testata su Windows e Linux. Tutte le icone provengono dal repository https://github.com/collab-uniba/PersonalAnalytics/tree/field_study_merge
+I dati inseriti (insieme con il timestamp di apertura della finestra e il timestamp di invio del form) vengono salvati in database che è possibile esportare in formato CSV. Se fornito un file [credentials.json](https://gspread.readthedocs.io/en/latest/oauth2.html) nella cartella `data`, i dati raccolti vengono caricati su Google Spreadheets.
 
-**I binari precompilati sono disponibili nella directory `dist/`**
+È presente un'opzione per mostrare una retrospettiva in forma di diagramma a bolle in accordo con il Circumplex Model di James Russell.
+
+L'applicazione è scritta in Python 3 e Qt5, dipende unicamente da librerie **multipiattaforma**. È stata testata su Windows e Linux. Tutte le icone provengono dal repository https://github.com/collab-uniba/PersonalAnalytics/tree/field_study_merge
 
 Esempio di file csv:
 ```
-1558525912,1558525917,Coding,7,6,
-1558525925,1558525931,Taking a break,6,8,I'm going to lunch.
-1558525947,1558525958,Debugging,3,4,
+1560297165,,,,POPUP_OPENED,
+1560297173,Coding,7,6,POPUP_CLOSED,
+1560297178,,,,POPUP_OPENED,
+1560297190,Taking a break,6,8,POPUP_CLOSED,I'm going to lunch.
+1560297194,,,,POPUP_OPENED,
+1560297219,Debugging,3,4,POPUP_CLOSED,I can't fix a bug!
 ```
 
-![Screenshot](screenshot_main.png)
-
-![Screenshot](screenshot_windows.png)
-
-![Screenshot](screenshot_timer.png)
-
-![Screenshot](screenshot_tray.png)
-
-![Screenshot](screenshot_save.png)
+![Screenshot](screenshot.png)
 
 # Compilazione
 
-È necessario avere installate le seguenti librerie per Python 3:
- - PyQt5
- - pyinstaller
- - appdirs
+La lista delle dipendenze è contenuta nel file `dependencies.txt`. È possibile installarle con il comando `make develop`.
 
-Per generare l'eseguibile Linux, eseguire in un ambiente Linux il file `build-linux.sh`. L'eseguibile generato verrà salvato nella directory `dist/`.
+Per generare un eseguibile standalone per Linux, eseguire `make build` in un ambiente Linux. In Windows eseguire `make build` per generare un file exe.
+Gli eseguibili vengono generati nella cartella `dist`.
 
-In Windows eseguire il file `build-windows.bat` per generare un exe in `dist/`.
+Prima di ogni nuova build, eseguire `make clean` per rimuovere la cartella `build` generata durante le compilazioni precedenti.
