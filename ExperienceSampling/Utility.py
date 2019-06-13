@@ -76,6 +76,13 @@ def toCommitPath():
 def toCommitCheck():
     return os.path.exists(toCommitPath())
 
-
 def checkCredentials():
     return os.path.exists(resource_path('data/credentials.json'))
+
+def checkSharelist():
+    return os.path.exists(resource_path('data/sharelist.txt'))
+
+def sharelist():
+    with open(resource_path('data/sharelist.txt'), 'r') as f:
+        x = f.read().splitlines()
+    return x
