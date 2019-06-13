@@ -19,7 +19,7 @@ debug:
 	$(PYTHON) debug.py
 
 develop:
-	$(pip) install -r requirements.txt
+	$(PIP) install -r requirements.txt
 
 clean:
 	$(RM_FOLDER) build
