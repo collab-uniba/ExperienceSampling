@@ -72,3 +72,6 @@ def getID():
 
 def toCommitPath():
     return os.path.join(csvDirPath(), 'toCommit.csv')
+
+def checkCredentials():
+    return os.path.exists(resource_path('data/credentials.json'))

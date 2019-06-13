@@ -18,7 +18,8 @@ class App(QApplication):
 
         self.debug = debug
 
-        self.spreadSheetWriter = SpreadSheetWriterClass()
+        if checkCredentials():
+            self.spreadSheetWriter = SpreadSheetWriterClass()
 
         QCoreApplication.setAttribute(Qt.AA_EnableHighDpiScaling)   # HiDPI support
         MSWindowsFix()  # MS Windows taskbar fix
@@ -84,8 +85,9 @@ class App(QApplication):
             data_writer.writerow([poll.closed,poll.activity,poll.valence,poll.arousal,'POPUP_CLOSED',poll.note])
 
     def writeToSpreadSheet(self,poll):
-        self.spreadSheetWriter.writeOnsheet([poll.opened, '', '', '', 'POPUP_OPENED', ''])
-        self.spreadSheetWriter.writeOnsheet([poll.closed,poll.activity,poll.valence,poll.arousal,'POPUP_CLOSED',poll.note])
+        if checkCredentials():
+            self.spreadSheetWriter.writeOnsheet([poll.opened, '', '', '', 'POPUP_OPENED', ''])
+            self.spreadSheetWriter.writeOnsheet([poll.closed,poll.activity,poll.valence,poll.arousal,'POPUP_CLOSED',poll.note])
 
 
     def exportCSV(self):
