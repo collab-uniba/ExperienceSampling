@@ -2,17 +2,16 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-import os, sys, time, csv, datetime, shutil, platform, appdirs
+import time
 
 from ExperienceSampling.Utility import *
+
 
 class Poll(QMainWindow):
 
     def __init__(self, app):
 
         self.app = app
-
-        self.filepath = os.path.join(appdirs.user_data_dir('ExperienceSampling', 'UniBA'), 'data.csv')
 
         QMainWindow.__init__(self)
         self.setWindowTitle("Experience Sampling")

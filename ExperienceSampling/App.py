@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -11,6 +9,7 @@ from ExperienceSampling.Notification import Notification
 from ExperienceSampling.Plot import Plot
 from ExperienceSampling.Utility import *
 from ExperienceSampling.SpreadSheetWriter import SpreadSheetWriterClass
+
 
 class App(QApplication):
 
