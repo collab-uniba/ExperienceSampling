@@ -1,16 +1,28 @@
+ifeq ($(OS),Windows_NT)
+	PYTHON = python
+	PIP = pip
+	PYINSTALLER = pyinstaller.exe
+	BUILD_OPT = --onefile --windowed --add-data "data/*;data" --icon "data\icon.ico" --paths "C:\Windows\System32\downlevel"
+	RM_FOLDER = rmdir /s /q
+else
+	PYTHON = python3
+	PIP = pip3
+	PYINSTALLER = pyinstaller
+	BUILD_OPT = --onefile --windowed --add-data 'data/*:data'
+	RM_FOLDER = rm -R
+endif
+
 run:
-	python run.py
+	$(PYTHON) run.py
 
 debug:
-	python debug.py
+	$(PYTHON) debug.py
 
 develop:
-	pip install -r requirements.txt
+	$(pip) install -r requirements.txt
 
-build-windows:
-	pyinstaller.exe --onefile --windowed --add-data "data/*;data" --icon "data\icon.ico" --paths "C:\Windows\System32\downlevel" run.py
-	ren dist\run.exe ExperienceSampling.exe
+clean:
+	$(RM_FOLDER) build
 
-build-linux:
-	pyinstaller --onefile --windowed --add-data 'data/*:data' run.py
-	mv dist/run dist/ExperienceSampling
+build:
+	$(PYINSTALLER) $(BUILD_OPT) run.py
