@@ -54,6 +54,8 @@ class App(QApplication):
 
     def setPollTimer(self,value):
         self.pollTime = value
+        self.stopPollTimer()
+        self.startPollTimer()
 
     def startPollTimer(self):
         if self.pollTimerEnabled and self.pollTime>0:
