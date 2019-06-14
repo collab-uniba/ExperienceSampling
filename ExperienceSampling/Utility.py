@@ -59,13 +59,16 @@ def internet_on():
     except:
         return False
 
+def getLogin():
+    return getpass.getuser() + "@" + socket.gethostname()
+
 def getID():
     """ Returns an unique user/machine identifier """
     if os.path.exists(os.path.join(csvDirPath(), 'id')):
         with open(os.path.join(csvDirPath(), 'id'), 'r') as file:
             return file.read()
     else:
-        id = getpass.getuser() + "@" + socket.gethostname() + "-" + str(uuid.uuid4())
+        id = getLogin() + ":" + str(uuid.uuid4())
         with open(os.path.join(csvDirPath(), 'id'), 'w') as file:
             file.write(id)
         return id

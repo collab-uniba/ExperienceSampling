@@ -26,13 +26,23 @@ class SpreadSheetWriterClass:
             self.worksheet = sh.get_worksheet(0)
         except gspread.SpreadsheetNotFound:
             sh = self.gc.create(ut.getID())
-            time.sleep(3)
             if ut.checkSharelist():
-                [sh.share(email, perm_type='user', role='writer') for email in ut.sharelist()]
+                for email in ut.sharelist():
+                    self.tryShare(sh,email)
             self.worksheet = sh.get_worksheet(0)
-            self.worksheet.append_row(['Timestamp', 'Activity', 'Valence', 'Arousal', 'Status', 'Notes'],"RAW")
+            #self.worksheet.append_row(['Timestamp', 'Activity', 'Valence', 'Arousal', 'Status', 'Notes'],"RAW")
         except:
             return False
+
+    def tryShare(self, sheet, email, errorCount=0):
+        if errorCount < 10:     # try 10 times. If it still fails, email must be invalid
+            try:
+                sheet.share(email, perm_type='user', role='writer', email_message=ut.getLogin() + ' ran ExperienceSampling for the first time!')
+            except gspread.exceptions.APIError:
+                time.sleep(1)
+                self.tryShare(sheet,email, errorCount+1)
+        else:
+            print('Cannot share sheet with ' + email)
 
     def writeOnsheet(self,arrayValues, sync=True):
         if(ut.internet_on()):
