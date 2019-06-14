@@ -30,7 +30,7 @@ class SpreadSheetWriterClass:
                 for email in ut.sharelist():
                     self.tryShare(sh,email)
             self.worksheet = sh.get_worksheet(0)
-            #self.worksheet.append_row(['Timestamp', 'Activity', 'Valence', 'Arousal', 'Status', 'Notes'],"RAW")
+            self.worksheet.append_row(['Timestamp', 'Activity', 'Valence', 'Arousal', 'Status', 'Notes'],"RAW")
         except:
             return False
 
