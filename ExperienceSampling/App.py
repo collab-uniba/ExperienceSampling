@@ -17,9 +17,6 @@ class App(QApplication):
 
         self.debug = debug
 
-        if checkCredentials():
-            self.spreadSheetWriter = SpreadSheetWriterClass()
-
         QCoreApplication.setAttribute(Qt.AA_EnableHighDpiScaling)   # HiDPI support
         MSWindowsFix()  # MS Windows taskbar fix
 
@@ -45,6 +42,9 @@ class App(QApplication):
         self.postponeTimer.timeout.connect(self.notification.show)
 
         self.startPollTimer()
+
+        if checkCredentials():
+            self.spreadSheetWriter = SpreadSheetWriterClass()
 
     def minutes(self):
         if self.debug==True:

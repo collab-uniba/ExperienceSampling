@@ -1,4 +1,4 @@
-import gspread
+import gspread, time
 from oauth2client.service_account import ServiceAccountCredentials
 import ExperienceSampling.Utility as ut
 import sys, csv, shutil, os
@@ -21,11 +21,28 @@ class SpreadSheetWriterClass:
 
     def setSheet(self):
         try:
-            sh = self.gc.open('dati_experience')
+            sh = self.gc.open(ut.getID())
             # Open a worksheet from spreadsheet with one shot
             self.worksheet = sh.get_worksheet(0)
+        except gspread.SpreadsheetNotFound:
+            sh = self.gc.create(ut.getID())
+            if ut.checkSharelist():
+                for email in ut.sharelist():
+                    self.tryShare(sh,email)
+            self.worksheet = sh.get_worksheet(0)
+            self.worksheet.append_row(['Timestamp', 'Activity', 'Valence', 'Arousal', 'Status', 'Notes'],"RAW")
         except:
             return False
+
+    def tryShare(self, sheet, email, errorCount=0):
+        if errorCount < 10:     # try 10 times. If it still fails, email must be invalid
+            try:
+                sheet.share(email, perm_type='user', role='writer', email_message=ut.getLogin() + ' ran ExperienceSampling for the first time!')
+            except gspread.exceptions.APIError:
+                time.sleep(1)
+                self.tryShare(sheet,email, errorCount+1)
+        else:
+            print('Cannot share sheet with ' + email)
 
     def writeOnsheet(self,arrayValues, sync=True):
         if(ut.internet_on()):

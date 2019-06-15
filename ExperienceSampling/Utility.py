@@ -59,13 +59,17 @@ def internet_on():
     except:
         return False
 
+def getLogin():
+    return getpass.getuser() + "@" + socket.gethostname()
+
 def getID():
     """ Returns an unique user/machine identifier """
     if os.path.exists(os.path.join(csvDirPath(), 'id')):
         with open(os.path.join(csvDirPath(), 'id'), 'r') as file:
             return file.read()
     else:
-        id = getpass.getuser() + "@" + socket.gethostname() + "-" + str(uuid.uuid4())
+        csvDirCheck()
+        id = getLogin() + ":" + str(uuid.uuid4())
         with open(os.path.join(csvDirPath(), 'id'), 'w') as file:
             file.write(id)
         return id
@@ -76,6 +80,13 @@ def toCommitPath():
 def toCommitCheck():
     return os.path.exists(toCommitPath())
 
-
 def checkCredentials():
     return os.path.exists(resource_path('data/credentials.json'))
+
+def checkSharelist():
+    return os.path.exists(resource_path('data/sharelist.txt'))
+
+def sharelist():
+    with open(resource_path('data/sharelist.txt'), 'r') as f:
+        x = f.read().splitlines()
+    return x
