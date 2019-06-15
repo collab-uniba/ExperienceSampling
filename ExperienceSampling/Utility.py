@@ -68,6 +68,7 @@ def getID():
         with open(os.path.join(csvDirPath(), 'id'), 'r') as file:
             return file.read()
     else:
+        csvDirCheck()
         id = getLogin() + ":" + str(uuid.uuid4())
         with open(os.path.join(csvDirPath(), 'id'), 'w') as file:
             file.write(id)
