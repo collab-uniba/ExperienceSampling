@@ -24,6 +24,7 @@ class App(QApplication):
         QApplication.__init__(self, sys.argv)
         self.setQuitOnLastWindowClosed(False)
         self.setWindowIcon(QIcon(resource_path("data/taskbar.png")))
+        MacOSFix() # Mac OS dock taskbar icon
 
         # init timers
         self.pollTime = pollTime
