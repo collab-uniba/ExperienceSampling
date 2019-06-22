@@ -42,7 +42,7 @@ class App(QApplication):
         self.pollTimer.timeout.connect(self.notification.show)
         self.postponeTimer.timeout.connect(self.notification.show)
 
-        if not nameSet():
+        if checkCredentials() and not nameSet():
             self.inputName(self.notification)
 
         self.startPollTimer()
@@ -51,7 +51,7 @@ class App(QApplication):
             self.spreadSheetWriter = SpreadSheetWriterClass()
 
     def inputName(self, window):
-            text, okPressed = QInputDialog.getText(window, "Insert your name", "Your name:", QLineEdit.Normal, "")
+            text, okPressed = QInputDialog.getText(window, "Who are you?", "Insert your name and surname:", QLineEdit.Normal, "")
             
             if okPressed and text != '':
                 setName(text)

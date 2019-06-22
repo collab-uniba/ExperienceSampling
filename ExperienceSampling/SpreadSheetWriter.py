@@ -1,7 +1,7 @@
 import gspread, time
 from oauth2client.service_account import ServiceAccountCredentials
 import ExperienceSampling.Utility as ut
-import sys, csv, shutil, os
+import sys, csv, os
 
 
 class SpreadSheetWriterClass:
@@ -21,11 +21,11 @@ class SpreadSheetWriterClass:
 
     def setSheet(self):
         try:
-            sh = self.gc.open(ut.getID())
+            sh = self.gc.open(ut.getSheetName())
             # Open a worksheet from spreadsheet with one shot
             self.worksheet = sh.get_worksheet(0)
         except gspread.SpreadsheetNotFound:
-            sh = self.gc.create(ut.getID())
+            sh = self.gc.create(ut.getSheetName())
             if ut.checkSharelist():
                 for email in ut.sharelist():
                     self.tryShare(sh,email)
@@ -37,7 +37,7 @@ class SpreadSheetWriterClass:
     def tryShare(self, sheet, email, errorCount=0):
         if errorCount < 10:     # try 10 times. If it still fails, email must be invalid
             try:
-                sheet.share(email, perm_type='user', role='writer', email_message=ut.getLogin() + ' ran ExperienceSampling for the first time!')
+                sheet.share(email, perm_type='user', role='writer', email_message=ut.getName() + ' ran ExperienceSampling for the first time!')
             except gspread.exceptions.APIError:
                 time.sleep(1)
                 self.tryShare(sheet,email, errorCount+1)
@@ -70,8 +70,6 @@ class SpreadSheetWriterClass:
                 for row in csv_reader:
                     self.writeOnsheet(row,sync=False)
             os.remove(ut.toCommitPath())
-
-
 
     def confirmWrite(self,lenght,openTime):
         if(self.worksheet.acell('A'+str(lenght)).value == str(openTime)):
