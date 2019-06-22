@@ -54,7 +54,10 @@ class Notification(QMainWindow):
         # ================ trayicon ================
 
         self.tray_icon = QSystemTrayIcon(self)
-        self.tray_icon.setIcon(QIcon(resource_path("data/tray.png")))
+        if isMacOS():
+            self.tray_icon.setIcon(QIcon(resource_path("data/tray_dark.png")))
+        else:
+            self.tray_icon.setIcon(QIcon(resource_path("data/tray.png")))
         tray_menu = QMenu()
         self.tray_icon.setContextMenu(tray_menu)
         
