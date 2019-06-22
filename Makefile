@@ -4,12 +4,25 @@ ifeq ($(OS),Windows_NT)
 	PYINSTALLER = pyinstaller.exe
 	BUILD_OPT = --onefile --windowed --add-data "data/*;data" --icon "data\icon.ico" --paths "C:\Windows\System32\downlevel"
 	RM_FOLDER = rmdir /s /q
+	DEPENDENCIES = -r requirements.txt
 else
-	PYTHON = python3
-	PIP = pip3
-	PYINSTALLER = pyinstaller
-	BUILD_OPT = --onefile --windowed --add-data 'data/*:data'
-	RM_FOLDER = rm -R
+	UNAME_S := $(shell uname -s)
+	ifeq ($(UNAME_S),Linux)
+		PYTHON = python3
+		PIP = pip3
+		PYINSTALLER = pyinstaller
+		BUILD_OPT = --onefile --windowed --add-data 'data/*:data'
+		RM_FOLDER = rm -R
+		DEPENDENCIES = -r requirements.txt
+	endif
+	ifeq ($(UNAME_S),Darwin)
+		PYTHON = python3
+		PIP = pip3
+		PYINSTALLER = pyinstaller
+		BUILD_OPT = --onefile --windowed --add-data 'data/*:data' --icon "data/icon.icns"
+		RM_FOLDER = rm -R
+		DEPENDENCIES = appkit pyobjc -r requirements.txt
+	endif
 endif
 
 run:
@@ -19,7 +32,7 @@ debug:
 	$(PYTHON) debug.py
 
 develop:
-	$(PIP) install -r requirements.txt
+	$(PIP) install $(DEPENDENCIES)
 
 clean:
 	$(RM_FOLDER) build
