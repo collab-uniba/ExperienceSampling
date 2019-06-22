@@ -14,11 +14,25 @@ def resource_path(relative_path):
 
     return os.path.join(base_path, relative_path)
 
+def isMSWindows():
+    return os.name == 'nt' or platform.system() == 'Windows' or 'cygwin' in platform.system().lower()
+
+def isMacOS():
+    return platform.system() == 'Darwin'
+
 def MSWindowsFix():
-    if os.name == 'nt' or platform.system() == 'Windows' or 'cygwin' in platform.system().lower():
+    if isMSWindows():
         import ctypes
         myappid = u'h3r0n.PersonalAnalytics.ExperienceSampling.1' # arbitrary string
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+
+def MacOSFix():
+    if isMacOS():
+        import AppKit
+        #NSApplicationActivationPolicyRegular = 0
+        #NSApplicationActivationPolicyAccessory = 1
+        #NSApplicationActivationPolicyProhibited = 2
+        AppKit.NSApp.setActivationPolicy_(1)
 
 def csvDirCheck():
     if not os.path.exists(csvDirPath()):
@@ -69,7 +83,7 @@ def getID():
             return file.read()
     else:
         csvDirCheck()
-        id = getLogin() + ":" + str(uuid.uuid4())
+        id = str(uuid.uuid4())
         with open(os.path.join(csvDirPath(), 'id'), 'w') as file:
             file.write(id)
         return id
@@ -90,3 +104,23 @@ def sharelist():
     with open(resource_path('data/sharelist.txt'), 'r') as f:
         x = f.read().splitlines()
     return x
+
+def nameSet():
+    return os.path.exists(os.path.join(csvDirPath(), 'name'))
+
+def setName(text):
+    csvDirCheck()
+    with open(os.path.join(csvDirPath(), 'name'), 'w') as file:
+        file.write(text)
+
+def getName():
+    if nameSet():
+        with open(os.path.join(csvDirPath(), 'name'), 'r') as file:
+            return file.read()
+    else:       
+        setName(getLogin())
+        
+        return getLogin()
+
+def getSheetName():
+    return getName() + ":" + getID()

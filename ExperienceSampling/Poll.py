@@ -180,6 +180,7 @@ class Poll(QMainWindow):
 
         if comboValid and radio1Valid and radio2Valid:
             self.button1.setEnabled(True)
+            self.button1.repaint(self.button1.rect())   # Qt bug workaround: https://github.com/3ll3d00d/beqdesigner/issues/56
       
     def submitForm(self):
         closed = int(time.time())
