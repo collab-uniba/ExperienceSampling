@@ -67,7 +67,7 @@ class Poll(QMainWindow):
 
         #radio buttons
         self.radioButtons1 = []
-        [self.radioButtons1.append(QRadioButton(str(i))) for i in range(1,10)]
+        [self.radioButtons1.append(QRadioButton(str(i))) for i in range(1,6)]
         [i.clicked.connect(self.checkPollComplete) for i in self.radioButtons1]
         [feel1RadioLayout.addWidget(i) for i in self.radioButtons1]
 
@@ -104,7 +104,7 @@ class Poll(QMainWindow):
 
         #radio buttons
         self.radioButtons2 = []
-        [self.radioButtons2.append(QRadioButton(str(i))) for i in range(1,10)]
+        [self.radioButtons2.append(QRadioButton(str(i))) for i in range(1,6)]
         [i.clicked.connect(self.checkPollComplete) for i in self.radioButtons2]
         [feel2RadioLayout.addWidget(i) for i in self.radioButtons2]
 
