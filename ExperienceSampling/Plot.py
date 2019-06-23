@@ -53,13 +53,13 @@ class MyMplCanvas(FigureCanvas):
             
         self.axes.set_xticks([], [])
         self.axes.set_yticks([], [])
-        self.axes.set_xlim(0, 10)
-        self.axes.set_ylim(0, 10)
+        self.axes.set_xlim(0, 6)
+        self.axes.set_ylim(0, 6)
 
-        self.axes.text(5, 10.1, 'Very excited', horizontalalignment='center')
-        self.axes.text(5, -.5, 'Very calm', horizontalalignment='center')
-        self.axes.text(10, 5, 'Pleasant', verticalalignment='center', rotation=90)
-        self.axes.text(-.5, 5, 'Unpleasant', verticalalignment='center', rotation=90)
+        self.axes.text(3, 6.1, 'Very excited', horizontalalignment='center')
+        self.axes.text(3, -.3, 'Very calm', horizontalalignment='center')
+        self.axes.text(6.1, 3, 'Pleasant', verticalalignment='center', rotation=90)
+        self.axes.text(-.3, 3, 'Unpleasant', verticalalignment='center', rotation=90)
 
         try:
             x,y = csv2numpy(csvFilePath())
