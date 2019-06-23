@@ -164,7 +164,7 @@ class Poll(QMainWindow):
         layout.addItem(QSpacerItem(25, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         # combobox2
-        label1 = QLabel('My productivity is?')
+        label1 = QLabel('My productivity is')
         label1.setAlignment(Qt.AlignCenter)
         label1.setStyleSheet("font-size: 10pt; font-weight: bold;")
         layout.addWidget(label1)
