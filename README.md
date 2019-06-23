@@ -4,7 +4,7 @@ L'applicazione mostra una notifica ogni 60 minuti (di default). Cliccando sulla 
 
 Quando la finestra viene chiusa, l'applicazione rimane in attesa nella system tray.
 
-I dati inseriti (insieme con il timestamp di apertura della finestra e il timestamp di invio del form) vengono salvati in database che è possibile esportare in formato CSV. Se fornito un file [credentials.json](https://gspread.readthedocs.io/en/latest/oauth2.html) nella cartella `data`, i dati raccolti vengono caricati su Google Spreadheets.
+I dati inseriti (insieme con il timestamp di apertura della finestra e il timestamp di invio del form) vengono salvati in un database che è possibile esportare in formato CSV. Se fornito un file [credentials.json](https://gspread.readthedocs.io/en/latest/oauth2.html) nella cartella `data`, i dati raccolti vengono caricati su Google Spreadheets. Per poter essere visualizzati, è necessario condividere gli spreadsheet con degli account Google. Scrivere una lista degli indirizzi email di tali account nel file `data/sharelist.txt` (uno per riga, senza a capo finale).
 
 È presente un'opzione per mostrare una retrospettiva in forma di diagramma a bolle in accordo con il Circumplex Model di James Russell.
 
@@ -22,11 +22,11 @@ Esempio di file csv:
 
 ![Screenshot](screenshot.png)
 
-# Compilazione
+# Generazione eseguibile standalone
 
-La lista delle dipendenze è contenuta nel file `dependencies.txt`. È possibile installarle con il comando `make develop`.
+La lista delle dipendenze è contenuta nel file `requirements.txt`. È possibile installarle con il comando `make develop`.
 
-Per generare un eseguibile standalone per Linux, eseguire `make build` in un ambiente Linux. In Windows eseguire `make build` per generare un file exe.
+Per generare un eseguibile standalone per Linux, eseguire `make build` in un ambiente Linux. In Windows eseguire `make build` per generare un file exe. Allo stesso modo eseguire `make build` in Mac OS per generare un file app.
 Gli eseguibili vengono generati nella cartella `dist`.
 
-Prima di ogni nuova build, eseguire `make clean` per rimuovere la cartella `build` generata durante le compilazioni precedenti.
+Prima di ogni nuova build, eseguire `make clean` per rimuovere la cartella `build` generata durante le build precedenti.
