@@ -30,7 +30,7 @@ class SpreadSheetWriterClass:
                 for email in ut.sharelist():
                     self.tryShare(sh,email)
             self.worksheet = sh.get_worksheet(0)
-            self.worksheet.append_row(['Timestamp', 'Activity', 'Valence', 'Arousal', 'Status', 'Notes'],"RAW")
+            self.worksheet.append_row(['Timestamp', 'Activity', 'Valence', 'Arousal','Dominance','Productivity', 'Status', 'Notes'],"RAW")
         except:
             return False
 
@@ -61,7 +61,7 @@ class SpreadSheetWriterClass:
         else:
             with open(ut.toCommitPath(), mode='a+', newline='') as data:
                 data_writer = csv.writer(data, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                data_writer.writerow([arrayValues[0], arrayValues[1], arrayValues[2], arrayValues[3],arrayValues[4], arrayValues[5]])
+                data_writer.writerow([arrayValues[0], arrayValues[1], arrayValues[2], arrayValues[3],arrayValues[4], arrayValues[5], arrayValues[6], arrayValues[7]])
 
     def insertFromOffline(self):
         if ut.toCommitCheck():

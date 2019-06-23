@@ -60,7 +60,7 @@ def csv2numpy(file):
     with open(file) as csv_file:      
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
-            if row[4] == "POPUP_CLOSED":
+            if row[6] == "POPUP_CLOSED":
                 x = np.append(x,int(row[2]))
                 y = np.append(y,int(row[3]))
 

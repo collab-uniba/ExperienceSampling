@@ -100,8 +100,8 @@ class App(QApplication):
 
     def writeToSpreadSheet(self,poll):
         if checkCredentials():
-            self.spreadSheetWriter.writeOnsheet([poll.opened, '', '', '', 'POPUP_OPENED', ''])
-            self.spreadSheetWriter.writeOnsheet([poll.closed,poll.activity,poll.valence,poll.arousal,'POPUP_CLOSED',poll.note])
+            self.spreadSheetWriter.writeOnsheet([poll.opened, '', '', '', '','','POPUP_OPENED', ''])
+            self.spreadSheetWriter.writeOnsheet([poll.closed,poll.activity,poll.valence,poll.arousal,poll.dominance,poll.productivity,'POPUP_CLOSED',poll.note])
 
 
     def exportCSV(self):
