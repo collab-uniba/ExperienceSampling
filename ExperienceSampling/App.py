@@ -85,6 +85,7 @@ class App(QApplication):
         self.postponeTimer.stop()
 
     def showPoll(self):
+
         self.poll.show()
 
     def showPlot(self):
@@ -94,8 +95,8 @@ class App(QApplication):
         csvDirCheck()
         with open(csvFilePath(), mode='a', newline='') as data:
             data_writer = csv.writer(data, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            data_writer.writerow([poll.opened,'','','','POPUP_OPENED',''])
-            data_writer.writerow([poll.closed,poll.activity,poll.valence,poll.arousal,'POPUP_CLOSED',poll.note])
+            data_writer.writerow([poll.opened,'','','','','','POPUP_OPENED',''])
+            data_writer.writerow([poll.closed,poll.activity,poll.valence,poll.arousal,poll.dominance,poll.productivity,'POPUP_CLOSED',poll.note])
 
     def writeToSpreadSheet(self,poll):
         if checkCredentials():

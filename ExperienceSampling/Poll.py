@@ -20,17 +20,20 @@ class Poll(QMainWindow):
         self.setWindowFlags(Qt.Window | Qt.WindowTitleHint | Qt.CustomizeWindowHint | Qt.WindowStaysOnTopHint)
 
         self.activities = ['', 'Coding', 'Bugfixing', 'Testing', 'Design', 'Meeting', 'Email', 'Helping', 'Networking', 'Learning', 'Administrative tasks', 'Documentation']
-
+        self.productivityLevel = ['','Very low','Below average','Average','Above average','Very high']
         # ================ layout ================
         central_widget = QWidget(self)
         self.setCentralWidget(central_widget)
         layout = QVBoxLayout()
         central_widget.setLayout(layout)
 
+
+
+
         #combobox
         label1 = QLabel('In which activity have you mainly been involved since the last notification?')
         label1.setAlignment(Qt.AlignCenter)
-        label1.setStyleSheet("font-size: 12pt; font-weight: bold;")
+        label1.setStyleSheet("font-size: 10pt; font-weight: bold;")
         layout.addWidget(label1)
         self.combobox1 = QComboBox()
         layout.addWidget(self.combobox1, 0, Qt.AlignHCenter)
@@ -38,12 +41,12 @@ class Poll(QMainWindow):
         self.combobox1.model().item(0).setEnabled(False)
         self.combobox1.activated.connect(self.checkPollComplete)
 
-        layout.addItem(QSpacerItem(25, 25, QSizePolicy.Minimum, QSizePolicy.Fixed))
+        layout.addItem(QSpacerItem(25, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         #howDoYouFeel1
         label2 = QLabel('How do you feel now?')
         label2.setAlignment(Qt.AlignCenter)
-        label2.setStyleSheet("font-size: 12pt; font-weight: bold;")
+        label2.setStyleSheet("font-size: 10pt; font-weight: bold;")
         layout.addWidget(label2)
         feel1Group = QGroupBox()
         layout.addWidget(feel1Group)
@@ -118,7 +121,62 @@ class Poll(QMainWindow):
         label2_3.setAlignment(Qt.AlignRight)
         feel2LabelLayout.addWidget(label2_3)
 
-        layout.addItem(QSpacerItem(25, 25, QSizePolicy.Minimum, QSizePolicy.Fixed))
+
+        # howDoYouFeel3
+        feel3Group = QGroupBox()
+        layout.addWidget(feel3Group)
+        feel3GroupLayout = QVBoxLayout()
+        feel3Group.setLayout(feel3GroupLayout)
+        feel3ImgLayout = QHBoxLayout()
+        feel3GroupLayout.addLayout(feel3ImgLayout)
+        feel3RadioLayout = QHBoxLayout()
+        feel3GroupLayout.addLayout(feel3RadioLayout)
+        feel3LabelLayout = QHBoxLayout()
+        feel3GroupLayout.addLayout(feel3LabelLayout)
+
+        # images
+        images3 = []
+        for i in range(1, 6):
+            j = QLabel()
+            images3.append(j)
+            j.setPixmap(QPixmap(resource_path("data/D" + str(i) + ".png")))
+
+        [feel3ImgLayout.addWidget(i, 0, Qt.AlignCenter) for i in images3]
+
+        # radio buttons
+        self.radioButtons3 = []
+        [self.radioButtons3.append(QRadioButton(str(i))) for i in range(1, 6)]
+        [i.clicked.connect(self.checkPollComplete) for i in self.radioButtons3]
+        [feel3RadioLayout.addWidget(i, 0, Qt.AlignCenter) for i in self.radioButtons3]
+
+        # labels
+        label3_1 = QLabel("Weak Dominance")
+        feel3LabelLayout.addWidget(label3_1)
+        label3_2 = QLabel("Regular Dominance")
+        label3_2.setAlignment(Qt.AlignCenter)
+        feel3LabelLayout.addWidget(label3_2)
+        label3_3 = QLabel("High Dominance")
+        label3_3.setAlignment(Qt.AlignRight)
+        feel3LabelLayout.addWidget(label3_3)
+
+
+
+        layout.addItem(QSpacerItem(25, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
+
+        # combobox2
+        label1 = QLabel('My productivity is?')
+        label1.setAlignment(Qt.AlignCenter)
+        label1.setStyleSheet("font-size: 10pt; font-weight: bold;")
+        layout.addWidget(label1)
+        self.combobox2 = QComboBox()
+        layout.addWidget(self.combobox2, 0, Qt.AlignHCenter)
+        self.combobox2.addItems(self.productivityLevel)
+        self.combobox2.model().item(0).setEnabled(False)
+        self.combobox2.activated.connect(self.checkPollComplete)
+
+        layout.addItem(QSpacerItem(25, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
+
+
 
         #notes
         label3 = QLabel('Notes (optional)')
@@ -129,14 +187,17 @@ class Poll(QMainWindow):
         layout.addWidget(self.textBox)
         self.textBox.setPlaceholderText("Did you experience anything that might have affected your emotion during the last session?")
 
-        layout.addItem(QSpacerItem(25, 25, QSizePolicy.Minimum, QSizePolicy.Fixed))
+        layout.addItem(QSpacerItem(25, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         #footer
         self.button1 = QPushButton("Done")
         self.button1.clicked.connect(self.submitForm)
         self.button1.setEnabled(False)
         layout.addWidget(self.button1,0,Qt.AlignHCenter)
-        
+
+
+
+
 
     def showEvent(self, event):
         self.opened = int(time.time())
@@ -154,6 +215,7 @@ class Poll(QMainWindow):
         
     def resetForm(self):
         self.combobox1.setCurrentIndex(0)
+        self.combobox2.setCurrentIndex(0)
         for i in self.radioButtons1:
             i.setAutoExclusive(False)
             i.setChecked(False)
@@ -162,12 +224,17 @@ class Poll(QMainWindow):
             i.setAutoExclusive(False)
             i.setChecked(False)
             i.setAutoExclusive(True)
+        for i in self.radioButtons3:
+            i.setAutoExclusive(False)
+            i.setChecked(False)
+            i.setAutoExclusive(True)
         self.textBox.setPlainText('')
         self.button1.setEnabled(False)
 
     def checkPollComplete(self):
         comboValid = self.combobox1.currentText() != ''
-        
+        comboValid2 = self.combobox2.currentText() != ''
+
         radio1Valid = False
         for i in self.radioButtons1:
                 if i.isChecked():
@@ -178,13 +245,19 @@ class Poll(QMainWindow):
                 if i.isChecked():
                     radio2Valid = True
 
-        if comboValid and radio1Valid and radio2Valid:
+        radio3Valid = False
+        for i in self.radioButtons3:
+                if i.isChecked():
+                    radio3Valid = True
+
+        if comboValid and radio1Valid and radio2Valid and radio3Valid and comboValid2:
             self.button1.setEnabled(True)
             self.button1.repaint(self.button1.rect())   # Qt bug workaround: https://github.com/3ll3d00d/beqdesigner/issues/56
       
     def submitForm(self):
         closed = int(time.time())
         activity = self.combobox1.currentText()
+        productivity = self.combobox2.currentText()
 
         valence = ''
         for i in self.radioButtons1:
@@ -196,9 +269,14 @@ class Poll(QMainWindow):
             if i.isChecked():
                 arousal = i.text()
 
+        dominance = ''
+        for i in self.radioButtons3:
+            if i.isChecked():
+                dominance = i.text()
+
         note = self.textBox.toPlainText()
 
-        poll = PollResult(self.opened, closed, activity, valence, arousal, note)
+        poll = PollResult(self.opened, closed, activity, valence, arousal,dominance,productivity, note)
         self.app.writeToCSV(poll)
         self.app.updatePlot()
         self.hide()
@@ -216,12 +294,14 @@ class QPlainTextEditSmall(QPlainTextEdit):
         return QSize(1,1)
 
 class PollResult:
-    def __init__(self, opened, closed, activity, valence, arousal, note=''):
+    def __init__(self, opened, closed, activity, valence, arousal, dominance,productivity, note=''):
         self.opened = opened
         self.closed = closed        
         self.activity = activity
         self.valence = valence
         self.arousal = arousal
+        self.dominance = dominance
+        self.productivity = productivity
         self.note = note
 
 
