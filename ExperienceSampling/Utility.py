@@ -2,6 +2,7 @@ import os, sys, appdirs, platform, csv, socket, uuid, getpass
 import numpy as np
 from pathlib import Path
 from urllib.request import urlopen
+import datetime
 
 
 def resource_path(relative_path):
@@ -52,7 +53,7 @@ def exportPath():
         return os.path.join(os.path.join(str(Path.home()), "Desktop"),"data.csv")
     return os.path.join(str(Path.home()),'data.csv')
 
-def csv2numpy(file):
+def csv2numpy(file, date=None):
         
     x = np.array([]).astype(int)
     y = np.array([]).astype(int)
@@ -61,9 +62,9 @@ def csv2numpy(file):
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
             if row[6] == "POPUP_CLOSED":
-                x = np.append(x,int(row[2]))
-                y = np.append(y,int(row[3]))
-
+                if date is None or date==datetime.datetime.fromtimestamp(int(row[0])).date():
+                    x = np.append(x,int(row[2]))
+                    y = np.append(y,int(row[3]))
     return (x,y)
 
 def internet_on():
@@ -124,3 +125,18 @@ def getName():
 
 def getSheetName():
     return getName() + ":" + getID()
+
+def earliestDate(file):
+    with open(file) as csv_file:      
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        for row in csv_reader:
+            if row[6] == "POPUP_CLOSED":
+                date = row[0]
+                return datetime.datetime.fromtimestamp(int(date)).date()
+    raise ValueError
+
+def todayDate():
+    return datetime.date.today()
+
+def pastDate(date, days):
+    return date - datetime.timedelta(days=days)

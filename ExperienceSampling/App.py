@@ -119,4 +119,4 @@ class App(QApplication):
             
 
     def updatePlot(self):
-        self.plot.mpl.update_figure()
+        self.plot.updatePlot()
