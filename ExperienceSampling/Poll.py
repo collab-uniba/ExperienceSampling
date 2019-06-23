@@ -41,7 +41,7 @@ class Poll(QMainWindow):
         layout.addItem(QSpacerItem(25, 25, QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         #howDoYouFeel1
-        label2 = QLabel('How do you feel right now?')
+        label2 = QLabel('How do you feel now?')
         label2.setAlignment(Qt.AlignCenter)
         label2.setStyleSheet("font-size: 12pt; font-weight: bold;")
         layout.addWidget(label2)
