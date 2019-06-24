@@ -1,34 +1,47 @@
 # ExperienceSampling
 
-[EN version](https://github.com/h3r0n/ExperienceSampling/blob/master/README_EN.md)
+[Italian version](https://github.com/h3r0n/ExperienceSampling/blob/master/README_IT.md)
 
-L'applicazione mostra una notifica ogni 60 minuti (di default). Cliccando sulla notifica è possibile accedere ad un form in cui l'utente può inserire le emozioni riportate durante la giornata.
+The goal of this project is to collect reports of affective experience with SAM (Self Assessment Manikin) methodology, in reaction to programming activities.
 
-Quando la finestra viene chiusa, l'applicazione rimane in attesa nella system tray.
+This application shows a notification every 60 minutes (by default). If the useres clicks on the notification, a form is displayed. The user can fill out the form by describing the emotions he experienced during the work day.
 
-I dati inseriti (insieme con il timestamp di apertura della finestra e il timestamp di invio del form) vengono salvati in un database che è possibile esportare in formato CSV. Se fornito un file [credentials.json](https://gspread.readthedocs.io/en/latest/oauth2.html) nella cartella `data`, i dati raccolti vengono caricati su Google Spreadheets. Per poter essere visualizzati, è necessario condividere gli spreadsheet con degli account Google. Scrivere una lista degli indirizzi email di tali account nel file `data/sharelist.txt` (uno per riga, senza a capo finale).
+When the form is not displayed, the applications sits in the system tray waiting for the user or the next notification.
 
-È presente un'opzione per mostrare una retrospettiva in forma di diagramma a bolle in accordo con il Circumplex Model di James Russell.
+The data collected by the appplication is stored in a local database and can be exported at any time as a CSV file.
 
-L'applicazione è scritta in Python 3 e Qt5, dipende unicamente da librerie **multipiattaforma**. È stata testata su Windows e Linux. Tutte le icone provengono dal repository https://github.com/collab-uniba/PersonalAnalytics/tree/field_study_merge
+If the application is provided with a [credentials.json](https://gspread.readthedocs.io/en/latest/oauth2.html) file in the `data` folder, the database is synced with Google Spreadsheet. The spreadsheets are shared with the Google accounts listed in `data/sharelist.txt` (one email address per row).
 
-Esempio di file csv:
+The application allows the user to see a retrospective diagram based on Circumplex Model by James Russell. 
+
+## Technology Used
+
+- Python 3 (version not specified)
+- Qt 5 (with pyqt package)
+
+The application is **multi-platform** and it has been tested on Windows, Linux and Mac OS.
+The icons come from this repository: https://github.com/collab-uniba/PersonalAnalytics/tree/field_study_merge
+
+CSV file example:
 ```
-1560297165,,,,POPUP_OPENED,
-1560297173,Coding,7,6,POPUP_CLOSED,
-1560297178,,,,POPUP_OPENED,
-1560297190,Taking a break,6,8,POPUP_CLOSED,I'm going to lunch.
-1560297194,,,,POPUP_OPENED,
-1560297219,Debugging,3,4,POPUP_CLOSED,I can't fix a bug!
+1560297165,,,,,,POPUP_OPENED,
+1560297173,Coding,3,4,5,Average,POPUP_CLOSED,
+1560297178,,,,,,POPUP_OPENED,
+1560297190,Taking a break,2,3,4,Under average,POPUP_CLOSED,I'm going to lunch.
+1560297194,,,,,,POPUP_OPENED,
+1560297219,Debugging,3,4,1,Average,POPUP_CLOSED,I can't fix a bug!
 ```
 
 ![Screenshot](screenshot.png)
 
-# Generazione eseguibile standalone
+# How to build a standalone executable
 
-La lista delle dipendenze è contenuta nel file `requirements.txt`. È possibile installarle con il comando `make develop`.
+The dependencies list is contained in `requirements.txt` file. Install the dependencies with the `make develop` command.
 
-Per generare un eseguibile standalone per Linux, eseguire `make build` in un ambiente Linux. In Windows eseguire `make build` per generare un file exe. Allo stesso modo eseguire `make build` in Mac OS per generare un file app.
-Gli eseguibili vengono generati nella cartella `dist`.
+To build a standalone executable for Linux, exec `make build` in a Linux environment to build an executable file called run.
+To build a standalone executable for Windows exec `make build` in a Windows environment to build an .exe file .
+To build a standalone executable for Mac OS esec `make build` in a Mac OS environment to build an .app file.
 
-Prima di ogni nuova build, eseguire `make clean` per rimuovere la cartella `build` generata durante le build precedenti.
+The executables will be located in the `dist` folder.
+
+Before every new build, make sure to exec `make clean` to remove the `build` folder from previous builds.
