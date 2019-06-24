@@ -1,5 +1,7 @@
 # ExperienceSampling
 
+[EN version](https://github.com/h3r0n/ExperienceSampling/blob/master/README_EN.md)
+
 L'applicazione mostra una notifica ogni 60 minuti (di default). Cliccando sulla notifica è possibile accedere ad un form in cui l'utente può inserire le emozioni riportate durante la giornata.
 
 Quando la finestra viene chiusa, l'applicazione rimane in attesa nella system tray.
