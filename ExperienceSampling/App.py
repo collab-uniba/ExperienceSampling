@@ -56,7 +56,7 @@ class App(QApplication):
             if okPressed and text != '':
                 setName(text)
             else:
-                setName(getLogin)
+                setName(getLogin())
 
     def minutes(self):
         if self.debug==True:
