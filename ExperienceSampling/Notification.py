@@ -144,7 +144,7 @@ Arcangelo Saracino (Arkango)
         self.app.exportCSV()
 
     def setAction(self):
-        i, okPressed = QInputDialog.getInt(self, "Set timer","Minutes:", self.app.pollTime, 0, 100, 1)
+        i, okPressed = QInputDialog.getInt(self, "Set timer","Minutes:", self.app.pollTime, 0, 120, 1)
         if okPressed and i>0:
             self.app.setPollTimer(i)
 
