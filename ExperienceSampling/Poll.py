@@ -41,7 +41,7 @@ class Poll(QMainWindow):
         self.combobox1.model().item(0).setEnabled(False)
         self.combobox1.activated.connect(self.checkPollComplete)
 
-        layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
+        #layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         #howDoYouFeel1
         label2 = QLabel('How do you feel now?')
@@ -161,7 +161,7 @@ class Poll(QMainWindow):
 
 
 
-        layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
+        #layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         # combobox2
         label1 = QLabel('My productivity is')
@@ -174,7 +174,7 @@ class Poll(QMainWindow):
         self.combobox2.model().item(0).setEnabled(False)
         self.combobox2.activated.connect(self.checkPollComplete)
 
-        layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
+        #layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
 
 
 
@@ -187,7 +187,7 @@ class Poll(QMainWindow):
         layout.addWidget(self.textBox)
         self.textBox.setPlaceholderText("Did you experience anything that might have affected your emotion during the last session?")
 
-        layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
+        #layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         #footer
         self.button1 = QPushButton("Done")
