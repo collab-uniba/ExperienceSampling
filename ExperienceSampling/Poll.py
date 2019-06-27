@@ -188,7 +188,7 @@ class Poll(QMainWindow):
         label3.setStyleSheet("font-size: 10pt; font-weight: bold;")
         layout.addWidget(label3)
         self.textBox = QPlainTextEditSmall()
-        self.textBox.setMinimumHeight(3*self.textBox.fontMetrics().lineSpacing())
+        self.textBox.setMinimumHeight(2*self.textBox.fontMetrics().lineSpacing())
         layout.addWidget(self.textBox)
         self.textBox.setPlaceholderText("Did you experience anything that might have affected your emotion during the last session?")
 
