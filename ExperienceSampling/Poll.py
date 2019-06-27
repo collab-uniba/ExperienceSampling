@@ -32,12 +32,12 @@ class Poll(QMainWindow):
         layout.addLayout(activityLayout)
 
         #combobox
-        label1 = QLabel('In which activity are you involved?')
-        label1.setAlignment(Qt.AlignCenter)
-        label1.setStyleSheet("font-size: 10pt; font-weight: bold;")
-        activityLayout.addWidget(label1)
+        label1 = QLabel('In which activity are you involved?   ')
+        #label1.setAlignment(Qt.AlignRight)
+        label1.setStyleSheet("font-size: 12pt; font-weight: bold;")
+        activityLayout.addWidget(label1, 0, Qt.AlignRight)
         self.combobox1 = QComboBox()
-        activityLayout.addWidget(self.combobox1, 0, Qt.AlignHCenter)
+        activityLayout.addWidget(self.combobox1, 0, Qt.AlignLeft)
         self.combobox1.addItems(self.activities)
         self.combobox1.model().item(0).setEnabled(False)
         self.combobox1.activated.connect(self.checkPollComplete)
@@ -47,7 +47,7 @@ class Poll(QMainWindow):
         #howDoYouFeel1
         label2 = QLabel('How do you feel now?')
         label2.setAlignment(Qt.AlignCenter)
-        label2.setStyleSheet("font-size: 10pt; font-weight: bold;")
+        label2.setStyleSheet("font-size: 12pt; font-weight: bold;")
         layout.addWidget(label2)
         feel1Group = QGroupBox()
         layout.addWidget(feel1Group)
@@ -171,7 +171,7 @@ class Poll(QMainWindow):
 
         label1 = QLabel('My productivity is:  ')
         label1.setAlignment(Qt.AlignCenter)
-        label1.setStyleSheet("font-size: 10pt; font-weight: bold;")
+        label1.setStyleSheet("font-size: 12pt; font-weight: bold;")
         productivityLayout.addWidget(label1)
         #self.combobox2 = QComboBox()
         #productivityLayout.addWidget(self.combobox2, 0, Qt.AlignHCenter)
@@ -190,7 +190,7 @@ class Poll(QMainWindow):
 
         #notes
         label3 = QLabel('Notes (optional)')
-        label3.setStyleSheet("font-size: 10pt; font-weight: bold;")
+        label3.setStyleSheet("font-size: 12pt; font-weight: bold;")
         layout.addWidget(label3)
         self.textBox = QPlainTextEditSmall()
         self.textBox.setMinimumHeight(2*self.textBox.fontMetrics().lineSpacing())
