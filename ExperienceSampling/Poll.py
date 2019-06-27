@@ -28,20 +28,21 @@ class Poll(QMainWindow):
         central_widget.setLayout(layout)
 
 
-
+        activityLayout = QHBoxLayout()
+        layout.addLayout(activityLayout)
 
         #combobox
         label1 = QLabel('In which activity are you involved?')
         label1.setAlignment(Qt.AlignCenter)
         label1.setStyleSheet("font-size: 10pt; font-weight: bold;")
-        layout.addWidget(label1)
+        activityLayout.addWidget(label1)
         self.combobox1 = QComboBox()
-        layout.addWidget(self.combobox1, 0, Qt.AlignHCenter)
+        activityLayout.addWidget(self.combobox1, 0, Qt.AlignHCenter)
         self.combobox1.addItems(self.activities)
         self.combobox1.model().item(0).setEnabled(False)
         self.combobox1.activated.connect(self.checkPollComplete)
 
-        #layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
+        layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         #howDoYouFeel1
         label2 = QLabel('How do you feel now?')
@@ -161,20 +162,24 @@ class Poll(QMainWindow):
 
 
 
-        #layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
+        layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         # combobox2
+
+        productivityLayout = QHBoxLayout()
+        layout.addLayout(productivityLayout)
+
         label1 = QLabel('My productivity is')
         label1.setAlignment(Qt.AlignCenter)
         label1.setStyleSheet("font-size: 10pt; font-weight: bold;")
-        layout.addWidget(label1)
+        productivityLayout.addWidget(label1)
         self.combobox2 = QComboBox()
-        layout.addWidget(self.combobox2, 0, Qt.AlignHCenter)
+        productivityLayout.addWidget(self.combobox2, 0, Qt.AlignHCenter)
         self.combobox2.addItems(self.productivityLevel)
         self.combobox2.model().item(0).setEnabled(False)
         self.combobox2.activated.connect(self.checkPollComplete)
 
-        #layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
+        layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
 
 
 
@@ -187,15 +192,13 @@ class Poll(QMainWindow):
         layout.addWidget(self.textBox)
         self.textBox.setPlaceholderText("Did you experience anything that might have affected your emotion during the last session?")
 
-        #layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
+        layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         #footer
         self.button1 = QPushButton("Done")
         self.button1.clicked.connect(self.submitForm)
         self.button1.setEnabled(False)
         layout.addWidget(self.button1,0,Qt.AlignHCenter)
-
-
 
 
 
