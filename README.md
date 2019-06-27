@@ -88,5 +88,3 @@ To build a standalone executable for Mac OS esec `make build` in a Mac OS enviro
 The executables will be located in the `dist` folder.
 
 Before every new build, make sure to exec `make clean` to remove the `build` folder from previous builds.
-
-[Italian version](https://github.com/h3r0n/ExperienceSampling/blob/master/README_IT.md)
