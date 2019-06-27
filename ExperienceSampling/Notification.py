@@ -80,7 +80,7 @@ class Notification(QMainWindow):
         tray_menu.addAction(plot_action)
         tray_menu.addAction(show_action)
         tray_menu.addAction(self.toggle_action)
-        tray_menu.addAction(set_action)
+        #tray_menu.addAction(set_action)
         tray_menu.addAction(export_action)
         tray_menu.addAction(about_action)
         tray_menu.addAction(quit_action)

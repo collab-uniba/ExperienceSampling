@@ -38,18 +38,13 @@ Run the executable to open the application. ExperienceSampling is a portable app
 
 ![](screenshots/icon.png)
 
-The first time you open the application, a popup window will ask you to insert your first name and surname<sup>[*](#sync)</sup>.
+The first time you open the application, a popup window will ask you to insert your ID<sup>[*](#sync)</sup>.
 
 ![](screenshots/name.png)
 
 Every 60 minutes (default timer) a notification will appear.
 
 ![](screenshots/notification.png)
-
-You can change the default timer at any time by opening the tray menu and selecting set timer.
-
-![](screenshots/timer_tray.png)
-![](screenshots/timer_set.png)
 
 Or you can enable/disable it from tray menu.
 

@@ -31,7 +31,7 @@ class Poll(QMainWindow):
 
 
         #combobox
-        label1 = QLabel('In which activity have you mainly been involved since the last notification?')
+        label1 = QLabel('In which activity are you involved?')
         label1.setAlignment(Qt.AlignCenter)
         label1.setStyleSheet("font-size: 10pt; font-weight: bold;")
         layout.addWidget(label1)
@@ -75,12 +75,12 @@ class Poll(QMainWindow):
         [feel1RadioLayout.addWidget(i,0, Qt.AlignCenter) for i in self.radioButtons1]
 
         #labels
-        label1_1 = QLabel("Very unpleasant")
+        label1_1 = QLabel("Annoyed")
         feel1LabelLayout.addWidget(label1_1)
-        label1_2 = QLabel("Neutral")
-        label1_2.setAlignment(Qt.AlignCenter)
-        feel1LabelLayout.addWidget(label1_2)
-        label1_3 = QLabel("Very pleasant")
+        #label1_2 = QLabel("Neutral")
+        #label1_2.setAlignment(Qt.AlignCenter)
+        #feel1LabelLayout.addWidget(label1_2)
+        label1_3 = QLabel("Pleased")
         label1_3.setAlignment(Qt.AlignRight)
         feel1LabelLayout.addWidget(label1_3)
 
@@ -112,12 +112,12 @@ class Poll(QMainWindow):
         [feel2RadioLayout.addWidget(i,0, Qt.AlignCenter) for i in self.radioButtons2]
 
         #labels
-        label2_1 = QLabel("Very calm")
+        label2_1 = QLabel("Calm")
         feel2LabelLayout.addWidget(label2_1)
-        label2_2 = QLabel("Neutral")
-        label2_2.setAlignment(Qt.AlignCenter)
-        feel2LabelLayout.addWidget(label2_2)
-        label2_3 = QLabel("Very excited")
+        #label2_2 = QLabel("Neutral")
+        #label2_2.setAlignment(Qt.AlignCenter)
+        #feel2LabelLayout.addWidget(label2_2)
+        label2_3 = QLabel("Excited")
         label2_3.setAlignment(Qt.AlignRight)
         feel2LabelLayout.addWidget(label2_3)
 
@@ -150,12 +150,12 @@ class Poll(QMainWindow):
         [feel3RadioLayout.addWidget(i, 0, Qt.AlignCenter) for i in self.radioButtons3]
 
         # labels
-        label3_1 = QLabel("Weak Dominance")
+        label3_1 = QLabel("Controlled")
         feel3LabelLayout.addWidget(label3_1)
-        label3_2 = QLabel("Regular Dominance")
-        label3_2.setAlignment(Qt.AlignCenter)
-        feel3LabelLayout.addWidget(label3_2)
-        label3_3 = QLabel("High Dominance")
+        #label3_2 = QLabel("Regular Dominance")
+        #label3_2.setAlignment(Qt.AlignCenter)
+        #feel3LabelLayout.addWidget(label3_2)
+        label3_3 = QLabel("Controlling")
         label3_3.setAlignment(Qt.AlignRight)
         feel3LabelLayout.addWidget(label3_3)
 

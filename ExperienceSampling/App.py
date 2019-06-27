@@ -51,7 +51,7 @@ class App(QApplication):
             self.spreadSheetWriter = SpreadSheetWriterClass()
 
     def inputName(self, window):
-            text, okPressed = QInputDialog.getText(window, "Who are you?", "Insert your name and surname:", QLineEdit.Normal, "")
+            text, okPressed = QInputDialog.getText(window, "Who are you?", "Insert your ID:", QLineEdit.Normal, "")
             
             if okPressed and text != '':
                 setName(text)
