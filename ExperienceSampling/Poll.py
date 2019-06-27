@@ -20,7 +20,7 @@ class Poll(QMainWindow):
         self.setWindowFlags(Qt.Window | Qt.WindowTitleHint | Qt.CustomizeWindowHint | Qt.WindowStaysOnTopHint)
 
         self.activities = ['', 'Coding', 'Bugfixing', 'Testing', 'Design', 'Meeting', 'Email', 'Helping', 'Networking', 'Learning', 'Administrative tasks', 'Documentation']
-        self.productivityLevel = ['','Very low','Below average','Average','Above average','Very high']
+        self.productivityLevel = ['Very low','Below average','Average','Above average','Very high']
         # ================ layout ================
         central_widget = QWidget(self)
         self.setCentralWidget(central_widget)
@@ -169,17 +169,22 @@ class Poll(QMainWindow):
         productivityLayout = QHBoxLayout()
         layout.addLayout(productivityLayout)
 
-        label1 = QLabel('My productivity is')
+        label1 = QLabel('My productivity is:  ')
         label1.setAlignment(Qt.AlignCenter)
         label1.setStyleSheet("font-size: 10pt; font-weight: bold;")
         productivityLayout.addWidget(label1)
-        self.combobox2 = QComboBox()
-        productivityLayout.addWidget(self.combobox2, 0, Qt.AlignHCenter)
-        self.combobox2.addItems(self.productivityLevel)
-        self.combobox2.model().item(0).setEnabled(False)
-        self.combobox2.activated.connect(self.checkPollComplete)
+        #self.combobox2 = QComboBox()
+        #productivityLayout.addWidget(self.combobox2, 0, Qt.AlignHCenter)
+        #self.combobox2.addItems(self.productivityLevel)
+        #self.combobox2.model().item(0).setEnabled(False)
+        #self.combobox2.activated.connect(self.checkPollComplete)
 
         layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
+
+        self.radioButtons4 = []
+        [self.radioButtons4.append(QRadioButton(str(i))) for i in self.productivityLevel]
+        [i.clicked.connect(self.checkPollComplete) for i in self.radioButtons4]
+        [productivityLayout.addWidget(i, 0, Qt.AlignCenter) for i in self.radioButtons4]
 
 
 
@@ -218,7 +223,7 @@ class Poll(QMainWindow):
         
     def resetForm(self):
         self.combobox1.setCurrentIndex(0)
-        self.combobox2.setCurrentIndex(0)
+        #self.combobox2.setCurrentIndex(0)
         for i in self.radioButtons1:
             i.setAutoExclusive(False)
             i.setChecked(False)
@@ -231,12 +236,16 @@ class Poll(QMainWindow):
             i.setAutoExclusive(False)
             i.setChecked(False)
             i.setAutoExclusive(True)
+        for i in self.radioButtons4:
+            i.setAutoExclusive(False)
+            i.setChecked(False)
+            i.setAutoExclusive(True)
         self.textBox.setPlainText('')
         self.button1.setEnabled(False)
 
     def checkPollComplete(self):
         comboValid = self.combobox1.currentText() != ''
-        comboValid2 = self.combobox2.currentText() != ''
+        #comboValid2 = self.combobox2.currentText() != ''
 
         radio1Valid = False
         for i in self.radioButtons1:
@@ -253,14 +262,19 @@ class Poll(QMainWindow):
                 if i.isChecked():
                     radio3Valid = True
 
-        if comboValid and radio1Valid and radio2Valid and radio3Valid and comboValid2:
+        radio4Valid = False
+        for i in self.radioButtons4:
+                if i.isChecked():
+                    radio4Valid = True
+
+        if comboValid and radio1Valid and radio2Valid and radio3Valid and radio4Valid:
             self.button1.setEnabled(True)
             self.button1.repaint(self.button1.rect())   # Qt bug workaround: https://github.com/3ll3d00d/beqdesigner/issues/56
       
     def submitForm(self):
         closed = int(time.time())
         activity = self.combobox1.currentText()
-        productivity = self.combobox2.currentText()
+        #productivity = self.combobox2.currentText()
 
         valence = ''
         for i in self.radioButtons1:
@@ -276,6 +290,11 @@ class Poll(QMainWindow):
         for i in self.radioButtons3:
             if i.isChecked():
                 dominance = i.text()
+
+        productivity = ''
+        for i in self.radioButtons4:
+            if i.isChecked():
+                productivity = i.text()
 
         note = self.textBox.toPlainText()
 
