@@ -156,7 +156,7 @@ class Poll(QMainWindow):
         #label3_2 = QLabel("Regular Dominance")
         #label3_2.setAlignment(Qt.AlignCenter)
         #feel3LabelLayout.addWidget(label3_2)
-        label3_3 = QLabel("Controlling")
+        label3_3 = QLabel("In control")
         label3_3.setAlignment(Qt.AlignRight)
         feel3LabelLayout.addWidget(label3_3)
 
