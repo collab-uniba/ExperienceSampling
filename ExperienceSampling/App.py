@@ -45,7 +45,8 @@ class App(QApplication):
         if checkCredentials() and not nameSet():
             self.inputName(self.notification)
 
-        self.startPollTimer()
+        self.notification.show()
+        #self.startPollTimer()
 
         if checkCredentials():
             self.spreadSheetWriter = SpreadSheetWriterClass()
