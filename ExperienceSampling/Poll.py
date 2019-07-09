@@ -179,12 +179,20 @@ class Poll(QMainWindow):
         #self.combobox2.model().item(0).setEnabled(False)
         #self.combobox2.activated.connect(self.checkPollComplete)
 
-        layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
+        #productivityLayout = QHBoxLayout()
+        #layout.addLayout(productivityLayout)
 
+        layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
+        productivityGroup = QGroupBox()
+        #layout.addWidget(productivityGroup)
+        productivityLayout.addWidget(productivityGroup)
+        productivityGroupLayout = QHBoxLayout()
+        productivityGroup.setLayout(productivityGroupLayout)
+        
         self.radioButtons4 = []
         [self.radioButtons4.append(QRadioButton(str(i))) for i in self.productivityLevel]
         [i.clicked.connect(self.checkPollComplete) for i in self.radioButtons4]
-        [productivityLayout.addWidget(i, 0, Qt.AlignCenter) for i in self.radioButtons4]
+        [productivityGroupLayout.addWidget(i, 0, Qt.AlignCenter) for i in self.radioButtons4]
 
 
 
