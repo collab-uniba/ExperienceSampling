@@ -1,5 +1,12 @@
 from ExperienceSampling.App import App
-import sys
+import sys, os
 
-app = App()
+try:
+    with open("timer.txt", 'r') as file:
+        timer = file.read()
+    timer = int(timer)
+    app = App(pollTime=timer)
+except:
+    app = App()
+
 sys.exit(app.exec_())
