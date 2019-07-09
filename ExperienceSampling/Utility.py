@@ -1,4 +1,4 @@
-import os, sys, appdirs, platform, csv, socket, uuid, getpass
+import os, sys, appdirs, platform, csv, socket, uuid, getpass, shutil
 import numpy as np
 from pathlib import Path
 from urllib.request import urlopen
@@ -47,6 +47,9 @@ def csvDirPath():
 
 def csvFilePath():
     return os.path.join(csvDirPath(), 'data.csv')
+
+def csvDirRm():
+    shutil.rmtree(appdirs.user_data_dir('ExperienceSampling', 'UniBA'), ignore_errors=True)
 
 def exportPath():
     if os.name == 'nt' or platform.system() == 'Windows' or 'cygwin' in platform.system().lower():

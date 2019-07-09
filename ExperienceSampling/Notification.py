@@ -67,6 +67,7 @@ class Notification(QMainWindow):
         set_action = QAction("Set timer", self)
         export_action = QAction("Export to csv", self)
         about_action = QAction("About", self)
+        reset_action = QAction("Clear data and quit", self)
         quit_action = QAction("Quit", self)
         
         plot_action.triggered.connect(self.plotEvent)
@@ -75,6 +76,7 @@ class Notification(QMainWindow):
         set_action.triggered.connect(self.setAction)
         export_action.triggered.connect(self.exportAction)
         about_action.triggered.connect(self.about)
+        reset_action.triggered.connect(self.resetEvent)
         quit_action.triggered.connect(self.quitEvent)
 
         tray_menu.addAction(plot_action)
@@ -83,6 +85,7 @@ class Notification(QMainWindow):
         #tray_menu.addAction(set_action)
         tray_menu.addAction(export_action)
         tray_menu.addAction(about_action)
+        tray_menu.addAction(reset_action)
         tray_menu.addAction(quit_action)
 
         self.tray_icon.show()
@@ -109,6 +112,10 @@ Arcangelo Saracino (Arkango)
         self.app.stopPollTimer()
         self.app.stopPostponeTimer()
         self.show()
+
+    def resetEvent(self):
+        csvDirRm()
+        self.quitEvent()
 
     def quitEvent(self):
         self.tray_icon.hide()
