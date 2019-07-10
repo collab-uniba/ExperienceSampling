@@ -48,8 +48,8 @@ class App(QApplication):
         self.notification.show()
         #self.startPollTimer()
 
-        if checkCredentials():
-            self.spreadSheetWriter = SpreadSheetWriterClass()
+        #if checkCredentials():
+         #   self.spreadSheetWriter = SpreadSheetWriterClass()
 
     def inputName(self, window):
             text, okPressed = QInputDialog.getText(window, "Who are you?", "Insert your ID:", QLineEdit.Normal, "")

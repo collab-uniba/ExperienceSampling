@@ -310,7 +310,7 @@ class Poll(QMainWindow):
         self.app.writeToCSV(poll)
         self.app.updatePlot()
         self.hide()
-        self.app.writeToSpreadSheet(poll)
+        #self.app.writeToSpreadSheet(poll)
 
 
 class QPlainTextEditSmall(QPlainTextEdit):
