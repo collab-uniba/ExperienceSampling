@@ -107,7 +107,7 @@ class MyMplCanvas(FigureCanvas):
         self.axes.text(3, 6.1, 'Excited', horizontalalignment='center')
         self.axes.text(3, -.3, 'Calm', horizontalalignment='center')
         self.axes.text(6.1, 3, 'Pleased', verticalalignment='center', rotation=90)
-        self.axes.text(-.3, 3, 'Unpleased', verticalalignment='center', rotation=90)
+        self.axes.text(-.3, 3, 'Annoyed', verticalalignment='center', rotation=90)
 
         try:
             x,y = csv2numpy(csvFilePath(),date=date)
