@@ -59,6 +59,11 @@ class Poll(QMainWindow):
         feel1LabelLayout = QHBoxLayout()
         feel1GroupLayout.addLayout(feel1LabelLayout)
 
+        feel1Group.setToolTip('''The valence level measures how pleasant or unpleasant one feels about something and range from a frown to a smile.
+If you feel completely annoyed, unhappy, unsatisfied, melancholic, despaired, bored, you can indicate this by choosing the figure at the left.
+The other end of the scale is when you feel completely happy, pleased, satisfied, contented, and hopeful.
+The figures also allow you to describe intermediate feelings of pleasure, by choosing any other pictures.''')  
+
         #images
         images1 = []
         for i in range(1,6):
@@ -92,6 +97,11 @@ class Poll(QMainWindow):
         feel2GroupLayout.addLayout(feel2RadioLayout)
         feel2LabelLayout = QHBoxLayout()
         feel2GroupLayout.addLayout(feel2LabelLayout)
+
+        feel2Group.setToolTip('''The arousal level, measures how energized or soporific one feels.
+At one extreme of the scale you feel calm, relaxed, sluggish, dull, sleepy, and un-aroused.
+On the other hand, at the other end of the scale, you feel completely excited, stimulated, frenzied, jittery, wide-awake, aroused.
+You can represent intermediate levels by choosing any of the other figures''')
 
         #images
         images2 = []
@@ -127,6 +137,11 @@ class Poll(QMainWindow):
         feel3GroupLayout.addLayout(feel3RadioLayout)
         feel3LabelLayout = QHBoxLayout()
         feel3GroupLayout.addLayout(feel3LabelLayout)
+
+        feel3Group.setToolTip('''The dominance is the dimension of controlled vs. in-control.
+At one end of the scale you have feelings characterized as completely controlled, influenced, cared-for, awed, submissive, and guided.
+At the other extreme of this scale, you feel completely controlling, influential, in control, important, dominant, and autonomous.
+If you feel neither in control nor controlled you should chose middle picture.''')
 
         # images
         images3 = []
