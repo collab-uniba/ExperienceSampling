@@ -17,7 +17,7 @@ class Poll(QMainWindow):
         self.setWindowTitle("Experience Sampling")
 
         # disable titlebar buttons, always on top
-        self.setWindowFlags(Qt.Window | Qt.WindowTitleHint | Qt.CustomizeWindowHint | Qt.WindowStaysOnTopHint)
+        self.setWindowFlags(Qt.Window | Qt.WindowTitleHint | Qt.CustomizeWindowHint | Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint )
 
         self.activities = ['', 'Coding', 'Bugfixing', 'Testing', 'Design', 'Meeting', 'Email', 'Helping', 'Networking', 'Learning', 'Administrative tasks', 'Documentation']
         self.productivityLevel = ['Very low','Below average','Average','Above average','Very high']
