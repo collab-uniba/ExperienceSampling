@@ -11,16 +11,18 @@ if not os.path.exists(lockfolder):
 try:
     if os.path.exists(lockfile):
         os.unlink(lockfile)
-    fd =  os.open(lockfile, os.O_CREAT|os.O_EXCL|os.O_RDWR)
+    fd =  os.open(lockfile, os.O_CREAT|os.O_EXCL|os.O_WRONLY)
+except OSError as e:
+        app = QApplication([])
+        error_dialog = QErrorMessage()
+        error_dialog.showMessage("Application already running!")
+        sys.exit(app.exec_())
 
+try:
     with open("timer.txt", 'r') as file:
         timer = file.read()
     timer = int(timer)
     app = App(pollTime=timer)
-except OSError:
-    app = QApplication([])
-    error_dialog = QErrorMessage()
-    error_dialog.showMessage("Application already running.")
 except (ValueError, FileNotFoundError):
     app = App()
 
