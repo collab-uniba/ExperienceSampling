@@ -33,7 +33,6 @@ class Poll(QMainWindow):
 
         #combobox
         label1 = QLabel('In which activity are you involved?   ')
-        #label1.setAlignment(Qt.AlignRight)
         label1.setStyleSheet("font-size: 12pt; font-weight: bold;")
         activityLayout.addWidget(label1, 0, Qt.AlignRight)
         self.combobox1 = QComboBox()
@@ -78,9 +77,6 @@ class Poll(QMainWindow):
         #labels
         label1_1 = QLabel("Annoyed")
         feel1LabelLayout.addWidget(label1_1)
-        #label1_2 = QLabel("Neutral")
-        #label1_2.setAlignment(Qt.AlignCenter)
-        #feel1LabelLayout.addWidget(label1_2)
         label1_3 = QLabel("Pleased")
         label1_3.setAlignment(Qt.AlignRight)
         feel1LabelLayout.addWidget(label1_3)
@@ -115,9 +111,6 @@ class Poll(QMainWindow):
         #labels
         label2_1 = QLabel("Calm")
         feel2LabelLayout.addWidget(label2_1)
-        #label2_2 = QLabel("Neutral")
-        #label2_2.setAlignment(Qt.AlignCenter)
-        #feel2LabelLayout.addWidget(label2_2)
         label2_3 = QLabel("Excited")
         label2_3.setAlignment(Qt.AlignRight)
         feel2LabelLayout.addWidget(label2_3)
@@ -153,9 +146,6 @@ class Poll(QMainWindow):
         # labels
         label3_1 = QLabel("Controlled")
         feel3LabelLayout.addWidget(label3_1)
-        #label3_2 = QLabel("Regular Dominance")
-        #label3_2.setAlignment(Qt.AlignCenter)
-        #feel3LabelLayout.addWidget(label3_2)
         label3_3 = QLabel("In control")
         label3_3.setAlignment(Qt.AlignRight)
         feel3LabelLayout.addWidget(label3_3)
@@ -173,18 +163,9 @@ class Poll(QMainWindow):
         label1.setAlignment(Qt.AlignCenter)
         label1.setStyleSheet("font-size: 12pt; font-weight: bold;")
         productivityLayout.addWidget(label1)
-        #self.combobox2 = QComboBox()
-        #productivityLayout.addWidget(self.combobox2, 0, Qt.AlignHCenter)
-        #self.combobox2.addItems(self.productivityLevel)
-        #self.combobox2.model().item(0).setEnabled(False)
-        #self.combobox2.activated.connect(self.checkPollComplete)
-
-        #productivityLayout = QHBoxLayout()
-        #layout.addLayout(productivityLayout)
 
         layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
         productivityGroup = QGroupBox()
-        #layout.addWidget(productivityGroup)
         productivityLayout.addWidget(productivityGroup)
         productivityGroupLayout = QHBoxLayout()
         productivityGroup.setLayout(productivityGroupLayout)

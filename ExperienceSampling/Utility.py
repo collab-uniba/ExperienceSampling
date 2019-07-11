@@ -27,14 +27,6 @@ def MSWindowsFix():
         myappid = u'h3r0n.PersonalAnalytics.ExperienceSampling.1' # arbitrary string
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
-def MacOSFix():
-    if isMacOS():
-        import AppKit
-        #NSApplicationActivationPolicyRegular = 0
-        #NSApplicationActivationPolicyAccessory = 1
-        #NSApplicationActivationPolicyProhibited = 2
-        AppKit.NSApp.setActivationPolicy_(1)
-
 def csvDirCheck():
     if not os.path.exists(csvDirPath()):
         os.makedirs(csvDirPath())

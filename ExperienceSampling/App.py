@@ -24,7 +24,6 @@ class App(QApplication):
         QApplication.__init__(self, sys.argv)
         self.setQuitOnLastWindowClosed(False)
         self.setWindowIcon(QIcon(resource_path("data/taskbar.png")))
-        #MacOSFix()  # Hide dock icon in Mac OS
 
         # init timers
         self.pollTime = pollTime
@@ -46,10 +45,6 @@ class App(QApplication):
             self.inputName(self.notification)
 
         self.notification.show()
-        #self.startPollTimer()
-
-        #if checkCredentials():
-         #   self.spreadSheetWriter = SpreadSheetWriterClass()
 
     def inputName(self, window):
             text, okPressed = QInputDialog.getText(window, "Who are you?", "Insert your ID:", QLineEdit.Normal, "")
