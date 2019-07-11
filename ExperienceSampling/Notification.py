@@ -23,15 +23,22 @@ class Notification(QMainWindow):
         layout = QHBoxLayout()
         central_widget.setLayout(layout)
 
+        vlayout = QVBoxLayout()
+
         image = QLabel()
         pm = QPixmap(resource_path("data/notify.png"))
         pm = pm.scaled(64,64)
         image.setPixmap(pm)
         layout.addWidget(image, 0, Qt.AlignCenter)
 
-        label1 = QLabel('How are you feeling?<br>Click here to open the popup')
+        layout.addLayout(vlayout)
+
+        label1 = QLabel('How are you feeling?')
         label1.setStyleSheet("font-size: 12pt;")
-        layout.addWidget(label1)
+        vlayout.addWidget(label1)
+        popupButton = QPushButton("Click here to open the popup")
+        vlayout.addWidget(popupButton)
+        popupButton.clicked.connect(self.showPollEvent)
 
         answerLayout = QVBoxLayout()
         layout.addLayout(answerLayout)
