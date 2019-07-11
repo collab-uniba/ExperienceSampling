@@ -96,8 +96,13 @@ class Notification(QMainWindow):
         tray_menu.addAction(quit_action)
 
         self.tray_icon.show()
-        self.tray_icon.activated.connect(self.updateTray)
+        self.tray_icon.activated.connect(self.doubleClickEvent)
 
+
+    def doubleClickEvent(self, reason):
+        if reason == QSystemTrayIcon.DoubleClick:
+            self.hide()
+            self.app.showPoll()
 
     def about(self):
         QMessageBox.about(self, "About",
