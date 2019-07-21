@@ -62,65 +62,6 @@ def csv2numpy(file, date=None):
                     y = np.append(y,int(row[3]))
     return (x,y)
 
-def internet_on():
-    try:
-        response = urlopen('https://www.google.com/', timeout=10)
-        return True
-    except:
-        return False
-
-def getLogin():
-    return getpass.getuser() + "@" + socket.gethostname()
-
-def getID():
-    """ Returns an unique user/machine identifier """
-    if os.path.exists(os.path.join(csvDirPath(), 'id')):
-        with open(os.path.join(csvDirPath(), 'id'), 'r') as file:
-            return file.read()
-    else:
-        csvDirCheck()
-        id = str(uuid.uuid4())
-        with open(os.path.join(csvDirPath(), 'id'), 'w') as file:
-            file.write(id)
-        return id
-
-def toCommitPath():
-    return os.path.join(csvDirPath(), 'toCommit.csv')
-
-def toCommitCheck():
-    return os.path.exists(toCommitPath())
-
-def checkCredentials():
-    return os.path.exists(resource_path('data/credentials.json'))
-
-def checkSharelist():
-    return os.path.exists(resource_path('data/sharelist.txt'))
-
-def sharelist():
-    with open(resource_path('data/sharelist.txt'), 'r') as f:
-        x = f.read().splitlines()
-    return x
-
-def nameSet():
-    return os.path.exists(os.path.join(csvDirPath(), 'name'))
-
-def setName(text):
-    csvDirCheck()
-    with open(os.path.join(csvDirPath(), 'name'), 'w') as file:
-        file.write(text)
-
-def getName():
-    if nameSet():
-        with open(os.path.join(csvDirPath(), 'name'), 'r') as file:
-            return file.read()
-    else:       
-        setName(getLogin())
-        
-        return getLogin()
-
-def getSheetName():
-    return getName() + ":" + getID()
-
 def earliestDate(file):
     with open(file) as csv_file:      
         csv_reader = csv.reader(csv_file, delimiter=',')

@@ -165,12 +165,9 @@ If you feel neither in control nor controlled you should chose middle picture.''
         label3_3.setAlignment(Qt.AlignRight)
         feel3LabelLayout.addWidget(label3_3)
 
-
-
         layout.addItem(QSpacerItem(1, 3, QSizePolicy.Minimum, QSizePolicy.Fixed))
 
         # combobox2
-
         productivityLayout = QHBoxLayout()
         layout.addLayout(productivityLayout)
 
@@ -189,8 +186,6 @@ If you feel neither in control nor controlled you should chose middle picture.''
         [self.radioButtons4.append(QRadioButton(str(i))) for i in self.productivityLevel]
         [i.clicked.connect(self.checkPollComplete) for i in self.radioButtons4]
         [productivityGroupLayout.addWidget(i, 0, Qt.AlignCenter) for i in self.radioButtons4]
-
-
 
         #notes
         label3 = QLabel('Notes (optional)')
@@ -227,7 +222,7 @@ If you feel neither in control nor controlled you should chose middle picture.''
         
     def resetForm(self):
         self.combobox1.setCurrentIndex(0)
-        #self.combobox2.setCurrentIndex(0)
+
         for i in self.radioButtons1:
             i.setAutoExclusive(False)
             i.setChecked(False)
@@ -249,7 +244,6 @@ If you feel neither in control nor controlled you should chose middle picture.''
 
     def checkPollComplete(self):
         comboValid = self.combobox1.currentText() != ''
-        #comboValid2 = self.combobox2.currentText() != ''
 
         radio1Valid = False
         for i in self.radioButtons1:
@@ -278,7 +272,6 @@ If you feel neither in control nor controlled you should chose middle picture.''
     def submitForm(self):
         closed = int(time.time())
         activity = self.combobox1.currentText()
-        #productivity = self.combobox2.currentText()
 
         valence = ''
         for i in self.radioButtons1:
@@ -306,7 +299,6 @@ If you feel neither in control nor controlled you should chose middle picture.''
         self.app.writeToCSV(poll)
         self.app.updatePlot()
         self.hide()
-        #self.app.writeToSpreadSheet(poll)
 
 
 class QPlainTextEditSmall(QPlainTextEdit):

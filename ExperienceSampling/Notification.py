@@ -36,7 +36,7 @@ class Notification(QMainWindow):
         label1 = QLabel('How are you feeling?')
         label1.setStyleSheet("font-size: 12pt;")
         vlayout.addWidget(label1)
-        popupButton = QPushButton("Click here to open the popup")
+        popupButton = QPushButton("Open the popup")
         vlayout.addWidget(popupButton)
         popupButton.clicked.connect(self.showPollEvent)
 
@@ -70,7 +70,6 @@ class Notification(QMainWindow):
         
         plot_action = QAction("Show Retrospective", self)
         show_action = QAction("Show Emotion Pop-up", self)
-        #self.toggle_action = QAction("Disable timer", self)
         set_action = QAction("Set timer", self)
         export_action = QAction("Export to csv", self)
         about_action = QAction("About", self)
@@ -79,7 +78,6 @@ class Notification(QMainWindow):
         
         plot_action.triggered.connect(self.plotEvent)
         show_action.triggered.connect(self.showPollEvent)
-        #self.toggle_action.triggered.connect(self.toggleAction)
         set_action.triggered.connect(self.setAction)
         export_action.triggered.connect(self.exportAction)
         about_action.triggered.connect(self.about)
@@ -88,8 +86,6 @@ class Notification(QMainWindow):
 
         tray_menu.addAction(plot_action)
         tray_menu.addAction(show_action)
-#        tray_menu.addAction(self.toggle_action)
-        #tray_menu.addAction(set_action)
         tray_menu.addAction(export_action)
         tray_menu.addAction(about_action)
         tray_menu.addAction(reset_action)
@@ -174,10 +170,3 @@ Arcangelo Saracino (Arkango)
         else:
             self.app.pollTimerEnabled = True
             self.app.startPollTimer()
-
-    def updateTray(self):
-        pass
-        #if self.app.pollTimerEnabled:
-         #   self.toggle_action.setText("Disable timer")
-        #else:
-         #   self.toggle_action.setText("Enable timer")

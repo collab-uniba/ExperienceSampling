@@ -8,7 +8,6 @@ from ExperienceSampling.Poll import Poll
 from ExperienceSampling.Notification import Notification
 from ExperienceSampling.Plot import Plot
 from ExperienceSampling.Utility import *
-from ExperienceSampling.SpreadSheetWriter import SpreadSheetWriterClass
 
 
 class App(QApplication):
@@ -41,9 +40,7 @@ class App(QApplication):
         self.pollTimer.timeout.connect(self.notification.show)
         self.postponeTimer.timeout.connect(self.notification.show)
 
-        if checkCredentials() and not nameSet():
-            self.inputName(self.notification)
-
+        # show first notification
         self.notification.show()
 
     def inputName(self, window):
