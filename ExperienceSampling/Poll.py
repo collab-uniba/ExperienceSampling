@@ -9,6 +9,9 @@ from ExperienceSampling.Utility import *
 
 class Poll(QMainWindow):
 
+    """A Qt5 window collecting collect reports of affective experience with SAM
+    (Self Assessment Manikin) methodology, in reaction to programming activities."""
+
     def __init__(self, app):
 
         self.app = app
@@ -321,5 +324,3 @@ class PollResult:
         self.dominance = dominance
         self.productivity = productivity
         self.note = note
-
-

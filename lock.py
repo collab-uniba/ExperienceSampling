@@ -1,6 +1,7 @@
 import os, platform
 
 def lock(LOCK_PATH):
+    """Returns true if other instances are running. This function uses a lock file."""
     
     is_running = False
 

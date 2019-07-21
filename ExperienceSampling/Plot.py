@@ -13,6 +13,10 @@ from ExperienceSampling.Utility import *
 
 class Plot(QMainWindow):
 
+    """
+    A Qt5 window showing a retrospective diagram based on the Circumplex Model by James Russell.
+    """
+
     def __init__(self, app=None):
 
         QMainWindow.__init__(self)

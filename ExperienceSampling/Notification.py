@@ -4,7 +4,6 @@ from PyQt5.QtGui import *
 
 from ExperienceSampling.Utility import *
 
-
 class Notification(QMainWindow):
 
     def __init__(self, app):

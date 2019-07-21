@@ -1,5 +1,8 @@
 .vscode/
 build/
 __pycache__/
-data/credentials.json
-data/sharelist.txt
+data/credentials*.json
+data/sharelist*.txt
+*.spec
+*/timer.txt
+dist/

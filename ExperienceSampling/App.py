@@ -14,7 +14,7 @@ class App(QApplication):
 
     def __init__(self, pollTime=60, postponeTime=60, debug=False):
 
-        self.debug = debug
+        self.debug = debug  # in debug mode, 1 minute lasts 1 second
 
         QCoreApplication.setAttribute(Qt.AA_EnableHighDpiScaling)   # HiDPI support
         MSWindowsFix()  # MS Windows taskbar fix
@@ -43,13 +43,6 @@ class App(QApplication):
         # show first notification
         self.notification.show()
 
-    def inputName(self, window):
-            text, okPressed = QInputDialog.getText(window, "Who are you?", "Insert your ID:", QLineEdit.Normal, "")
-            
-            if okPressed and text != '':
-                setName(text)
-            else:
-                setName(getLogin())
 
     def minutes(self):
         if self.debug==True:
@@ -78,7 +71,6 @@ class App(QApplication):
         self.postponeTimer.stop()
 
     def showPoll(self):
-
         self.poll.show()
 
     def showPlot(self):
@@ -90,12 +82,6 @@ class App(QApplication):
             data_writer = csv.writer(data, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             data_writer.writerow([poll.opened,'','','','','','POPUP_OPENED',''])
             data_writer.writerow([poll.closed,poll.activity,poll.valence,poll.arousal,poll.dominance,poll.productivity,'POPUP_CLOSED',poll.note])
-
-    def writeToSpreadSheet(self,poll):
-        if checkCredentials():
-            self.spreadSheetWriter.writeOnsheet([poll.opened, '', '', '', '','','POPUP_OPENED', ''])
-            self.spreadSheetWriter.writeOnsheet([poll.closed,poll.activity,poll.valence,poll.arousal,poll.dominance,poll.productivity,'POPUP_CLOSED',poll.note])
-
 
     def exportCSV(self):
         if csvFileCheck():

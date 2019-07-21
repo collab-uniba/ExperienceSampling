@@ -1,3 +1,7 @@
+"""
+A collection of support functions
+"""
+
 import os, sys, appdirs, platform, csv, socket, uuid, getpass, shutil
 import numpy as np
 from pathlib import Path
@@ -28,27 +32,36 @@ def MSWindowsFix():
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
 def csvDirCheck():
+    """ Makes sure that the csv folder exists """
     if not os.path.exists(csvDirPath()):
         os.makedirs(csvDirPath())
 
 def csvFileCheck():
+    """ Checks whether the csv file exists """
     return os.path.exists(csvFilePath())
 
 def csvDirPath():
+    """ Returns a csv folder path """
     return appdirs.user_data_dir('ExperienceSampling', 'UniBA')
 
 def csvFilePath():
+    """ Returns a csv folder path """
     return os.path.join(csvDirPath(), 'data.csv')
 
 def csvDirRm():
+    """ Removes the csv folder """
     shutil.rmtree(appdirs.user_data_dir('ExperienceSampling', 'UniBA'), ignore_errors=True)
 
 def exportPath():
-    if os.name == 'nt' or platform.system() == 'Windows' or 'cygwin' in platform.system().lower():
+    """ Returns the default export folder destination """
+
+    if isMSWindows():
         return os.path.join(os.path.join(str(Path.home()), "Desktop"),"data.csv")
+    
     return os.path.join(str(Path.home()),'data.csv')
 
 def csv2numpy(file, date=None):
+    """ Returns the valence and arousal values as a NumPy array """
         
     x = np.array([]).astype(int)
     y = np.array([]).astype(int)
@@ -63,6 +76,8 @@ def csv2numpy(file, date=None):
     return (x,y)
 
 def earliestDate(file):
+    """ Returns the date of the oldest submission as a datetime.date object """
+
     with open(file) as csv_file:      
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
