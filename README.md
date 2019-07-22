@@ -8,8 +8,6 @@ When the form is not displayed, the applications sits in the system tray waiting
 
 The data collected by the appplication is stored in a local database and can be exported at any time as a CSV file.
 
-If the application is provided with a [credentials.json](https://gspread.readthedocs.io/en/latest/oauth2.html) file in the `data` folder, the database is synced with Google Spreadsheet. The spreadsheets are shared with the Google accounts listed in `data/sharelist.txt` (one email address per row).
-
 The application allows the user to see a retrospective diagram based on Circumplex Model by James Russell. 
 
 ## Technology Used
@@ -38,18 +36,11 @@ Run the executable to open the application. ExperienceSampling is a portable app
 
 ![](screenshots/icon.png)
 
-The first time you open the application, a popup window will ask you to insert your ID<sup>[*](#sync)</sup>.
-
-![](screenshots/name.png)
-
 Every 60 minutes (default timer) a notification will appear.
 
 ![](screenshots/notification.png)
 
-Or you can enable/disable it from tray menu.
-
-![](screenshots/timer_enable.png)
-![](screenshots/timer_disable.png)
+The default timer can be defined by placing a file named `timer.txt` in the executable folder. `timer.txt` should only contain a single line representing the number of minutes.
 
 Once the notification appears, you have tree options:
  - Dismiss: the timer is disabled. You have to re-enable it from the tray menu
@@ -59,13 +50,11 @@ Once the notification appears, you have tree options:
 
 ![](screenshots/popup.png)
 
-Note: all fields except "Notes" aren't optional. After filling in the form, press the "Done" button to submit. Your data is stored in a local database and optionally<sup>[*](#sync)</sup> synched with Google Spreadsheet.
-
-After you close the popup window by pressing done, the timer (if not disabled) will again and the notification will appear again after the set amount of time.
-
-You can export your data at any time from the tray menu.
+Note: all fields except "Notes" aren't optional. After filling in the form, press the "Done" button to submit. Your data is stored in a local database and can be exported at any time from the tray menu.
 
 ![](screenshots/export.png)
+
+After you close the popup window by pressing done, the timer (if not disabled) will again and the notification will appear again after the set amount of time.
 
 Select "Show retrospective" from the tray menu to show a visual representation of your data as a bubble chart, according to the [Russel Circumplex Model](https://s3.amazonaws.com/academia.edu.documents/38425675/Russell1980.pdf?response-content-disposition=inline%3B%20filename%3DRussell1980.pdf&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWOWYYGZ2Y53UL3A%2F20190626%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20190626T124820Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=1213c8343f13b65494a57cc0cc31a3ec75d3332f1358e9c102ced93e032e3850).
 
@@ -75,7 +64,7 @@ Check "View single day" and move the slider to filter your emotions by day.
 
 ![](screenshots/retrospective_day.png)
 
-<a name="sync">*</a>: This feature will only work in presence of a stable network connection and if Google Spreadsheet has been set up correctly (at compilation time)
+
 
 # How to build a standalone executable
 
