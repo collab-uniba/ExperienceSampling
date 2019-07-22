@@ -216,9 +216,6 @@ If you feel neither in control nor controlled you should chose middle picture.''
 
     def showEvent(self, event):
         self.opened = int(time.time())
-        #self.scroll.resize(self.container.size()*2)
-        #self.resize(self.container.sizeHint()*1.01)
-        #print(self.scroll.verticalScrollBar().size())
 
     def closeEvent(self, event):
         event.ignore()
@@ -312,6 +309,8 @@ If you feel neither in control nor controlled you should chose middle picture.''
 
 
 class QPlainTextEditSmall(QPlainTextEdit):
+    """ A setMinimumHeight which allows any minimumHeight """
+
     def __init__(self, parent=None):
         QPlainTextEdit.__init__(self, parent)
     
@@ -322,22 +321,28 @@ class QPlainTextEditSmall(QPlainTextEdit):
         return QSize(1,1)
 
 class QScrollAreaFit(QScrollArea):
+    """ A QScrollArea which adapts its size to the contents and to the available screen space """
+
     def __init__(self, parent=None):
         QScrollArea.__init__(self, parent)
     
     def sizeHint(self):
-        max_height = QApplication.desktop().screenGeometry().height()
-        scrollbar = QSize(self.verticalScrollBar().size().height(),self.verticalScrollBar().size().height())
-        hint = self.widget().sizeHint()+scrollbar
+        # available vertical screen space (minus docks and taskbars)
+        max_height = int(QApplication.desktop().screenGeometry().height()*.88)
 
-        if hint.height()>int(max_height*.89):
-            hint.setHeight(int(max_height*.89))
+        scrollbar_width = self.verticalScrollBar().size().height()
+        size_scrollbar = QSize(scrollbar_width, scrollbar_width)
+        size_hint = self.widget().sizeHint()+size_scrollbar
 
-        return hint
+        # only shows the vertical scrollbar on smaller screens
+        if size_hint.height() > max_height:
+            size_hint.setHeight(max_height)
+
+        return size_hint
 
 
 class PollResult:
-    def __init__(self, opened, closed, activity, valence, arousal, dominance,productivity, note=''):
+    def __init__(self, opened, closed, activity, valence, arousal, dominance, productivity, note=''):
         self.opened = opened
         self.closed = closed        
         self.activity = activity
