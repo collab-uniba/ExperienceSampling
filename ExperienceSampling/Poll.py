@@ -20,16 +20,21 @@ class Poll(QMainWindow):
         self.setWindowTitle("Experience Sampling")
 
         # disable titlebar buttons, always on top
-        self.setWindowFlags(Qt.Window | Qt.WindowTitleHint | Qt.CustomizeWindowHint | Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint )
+        self.setWindowFlags(Qt.Window | Qt.WindowTitleHint | Qt.CustomizeWindowHint | Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint | Qt.WindowMaximizeButtonHint )
 
         self.activities = ['', 'Coding', 'Bugfixing', 'Testing', 'Design', 'Meeting', 'Email', 'Helping', 'Networking', 'Learning', 'Administrative tasks', 'Documentation']
         self.productivityLevel = ['Very low','Below average','Average','Above average','Very high']
+        
         # ================ layout ================
-        central_widget = QWidget(self)
-        self.setCentralWidget(central_widget)
-        layout = QVBoxLayout()
-        central_widget.setLayout(layout)
 
+        self.container = QWidget(self)
+        layout = QVBoxLayout()
+        self.container.setLayout(layout)
+
+        self.scroll = QScrollAreaFit(self.container)
+        self.scroll.setWidget(self.container)
+        self.scroll.setWidgetResizable(True)
+        self.setCentralWidget(self.scroll)
 
         activityLayout = QHBoxLayout()
         layout.addLayout(activityLayout)
@@ -195,7 +200,7 @@ If you feel neither in control nor controlled you should chose middle picture.''
         label3.setStyleSheet("font-size: 12pt; font-weight: bold;")
         layout.addWidget(label3)
         self.textBox = QPlainTextEditSmall()
-        self.textBox.setMinimumHeight(2*self.textBox.fontMetrics().lineSpacing())
+        self.textBox.setMinimumHeight(3*self.textBox.fontMetrics().lineSpacing())
         layout.addWidget(self.textBox)
         self.textBox.setPlaceholderText("Did you experience anything that might have affected your emotion during the last session?")
 
@@ -211,7 +216,9 @@ If you feel neither in control nor controlled you should chose middle picture.''
 
     def showEvent(self, event):
         self.opened = int(time.time())
-        self.show()
+        #self.scroll.resize(self.container.size()*2)
+        #self.resize(self.container.sizeHint()*1.01)
+        #print(self.scroll.verticalScrollBar().size())
 
     def closeEvent(self, event):
         event.ignore()
@@ -313,6 +320,22 @@ class QPlainTextEditSmall(QPlainTextEdit):
     
     def minimumSizeHint(self):
         return QSize(1,1)
+
+class QScrollAreaFit(QScrollArea):
+    def __init__(self, container):
+        QScrollArea.__init__(self, None)
+        self.container=container
+    
+    def sizeHint(self):
+        max_height = QApplication.desktop().screenGeometry().height()
+        scrollbar = QSize(self.verticalScrollBar().size().height(),self.verticalScrollBar().size().height())
+        hint = self.container.sizeHint()+scrollbar
+
+        if hint.height()>int(max_height*.89):
+            hint.setHeight(int(max_height*.89))
+
+        return hint
+
 
 class PollResult:
     def __init__(self, opened, closed, activity, valence, arousal, dominance,productivity, note=''):
