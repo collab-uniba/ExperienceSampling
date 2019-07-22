@@ -21,7 +21,6 @@ else
 		PYINSTALLER = pyinstaller
 		BUILD_OPT = --onefile --windowed --add-data 'data/*:data' --icon "data/icon.icns"
 		RM_FOLDER = rm -R
-		#DEPENDENCIES = appkit pyobjc -r requirements.txt
 		DEPENDENCIES = -r requirements.txt
 	endif
 endif
