@@ -31,7 +31,7 @@ class Poll(QMainWindow):
         layout = QVBoxLayout()
         self.container.setLayout(layout)
 
-        self.scroll = QScrollAreaFit(self.container)
+        self.scroll = QScrollAreaFit(self)
         self.scroll.setWidget(self.container)
         self.scroll.setWidgetResizable(True)
         self.setCentralWidget(self.scroll)
@@ -322,14 +322,13 @@ class QPlainTextEditSmall(QPlainTextEdit):
         return QSize(1,1)
 
 class QScrollAreaFit(QScrollArea):
-    def __init__(self, container):
-        QScrollArea.__init__(self, None)
-        self.container=container
+    def __init__(self, parent=None):
+        QScrollArea.__init__(self, parent)
     
     def sizeHint(self):
         max_height = QApplication.desktop().screenGeometry().height()
         scrollbar = QSize(self.verticalScrollBar().size().height(),self.verticalScrollBar().size().height())
-        hint = self.container.sizeHint()+scrollbar
+        hint = self.widget().sizeHint()+scrollbar
 
         if hint.height()>int(max_height*.89):
             hint.setHeight(int(max_height*.89))
