@@ -22,7 +22,7 @@ class Poll(QMainWindow):
         # disable titlebar buttons, always on top
         self.setWindowFlags(Qt.Window | Qt.WindowTitleHint | Qt.CustomizeWindowHint | Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint | Qt.WindowMaximizeButtonHint )
 
-        self.activities = ['', 'Coding', 'Bugfixing', 'Testing', 'Design', 'Meeting', 'Email', 'Helping', 'Networking', 'Learning', 'Administrative tasks', 'Documentation']
+        self.activities = ['', 'Coding', 'Bugfixing', 'Testing', 'Design', 'Meeting', 'Email', 'Helping', 'Networking', 'Learning', 'Administrative tasks', 'Documentation', 'Just arrived', 'Other']
         self.productivityLevel = ['Very low','Below average','Average','Above average','Very high']
         
         # ================ layout ================
