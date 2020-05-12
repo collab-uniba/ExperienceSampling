@@ -10,6 +10,11 @@ The data collected by the appplication is stored in a local database and can be 
 
 The application allows the user to see a retrospective diagram based on Circumplex Model by James Russell. 
 
+## Fair use policy
+
+Please, cite the following paper if you intend to use our tool for your own research:
+> D. Girardi, N.Novielli, D. Fucci, F. Lanubile. ["Recognizing Developers’ Emotions while Programming"](https://arxiv.org/abs/2001.09177). In Proceedings of the 42th International Conference on Software Engineering (ICSE 2020) – DOI: https://doi.org/10.1145/3377811.3380374
+
 ## Technology Used
 
 - Python 3 (version not specified)
@@ -77,3 +82,4 @@ To build a standalone executable for Mac OS esec `make build` in a Mac OS enviro
 The executables will be located in the `dist` folder.
 
 Before every new build, make sure to exec `make clean` to remove the `build` folder from previous builds.
+
