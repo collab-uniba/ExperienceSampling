@@ -8,7 +8,7 @@ When the form is not displayed, the applications sits in the system tray waiting
 
 The data collected by the appplication is stored in a local database and can be exported at any time as a CSV file.
 
-The application allows the user to see a retrospective diagram based on Circumplex Model by James Russell. 
+The application allows the user to see a retrospective diagram based on Circumplex Model by James Russell.
 
 ## Fair use policy
 
@@ -35,7 +35,7 @@ CSV file example:
 
 ![Screenshot](screenshots/screenshot.png)
 
-# User manual
+## User manual
 
 Run the executable to open the application. ExperienceSampling is a portable app and requires no installation.
 
@@ -70,10 +70,35 @@ Check "View single day" and move the slider to filter your emotions by day.
 ![](screenshots/retrospective_day.png)
 
 
+## How to build a standalone executable
 
-# How to build a standalone executable
+### Requirements setup
 
-The dependencies list is contained in `requirements.txt` file. Install the dependencies with the `make develop` command.
+To build a standalone version of this app, first install Qt5 on your system.
+For instance, on MacOS, you can do so with Homebrew by running `brew install qt5` (see https://stackoverflow.com/a/71669996/4178082).
+
+Then, install the Python dependencies listed in `requirements.txt` by running the `make develop` command.
+
+#### Notes for MacOS users
+
+If you use Pyenv to manage your Python versions, you need to build the desired Python version with the `--enable-shared` flag (see [Pyenv's docs](https://github.com/pyenv/pyenv/wiki#how-to-build-cpython-with---enable-shared)).
+E.g.:
+
+```shell
+env PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.7.12
+```
+
+Moreover, if you own a Mac with an Apple Silicon processor (e.g., M1), you will probably need to install pyqt5 separately with the command:
+
+```shell
+pip3 install pyqt5 --config-settings --confirm-license= --verbose
+```
+
+Only then, you can run `make develop` to install the other dependencies.
+
+This is due to the fact that, as of today, there is no wheel available for Apple Silicon. Therefore, pip will attempt to compile the package from source. However, the compilation process prompts the user to confirm the license agreement, which is not possible in a non-interactive environment. Luckily, pyqt has an argument to automatically accept the license (i.e., `--confirm-license`) and we can pass this argument using pip's `--config-settings` (see https://stackoverflow.com/a/74071222/4178082).
+
+### Build
 
 To build a standalone executable for Linux, exec `make build` in a Linux environment to build an executable file called run.
 To build a standalone executable for Windows exec `make build` in a Windows environment to build an .exe file .
