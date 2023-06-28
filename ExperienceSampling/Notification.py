@@ -15,7 +15,7 @@ class Notification(QMainWindow):
         self.setWindowTitle("Experience Sampling")
 
         # set no borders, no titlebar, no taskbar icon, always on top
-        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.Tool)
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
 
         # ================ layout ================
         central_widget = QWidget(self)
