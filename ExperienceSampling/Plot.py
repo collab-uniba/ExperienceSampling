@@ -21,6 +21,7 @@ class Plot(QMainWindow):
 
         QMainWindow.__init__(self)
         self.setWindowTitle("Retrospective")
+        self.setWindowFlags(Qt.Window | Qt.WindowTitleHint | Qt.CustomizeWindowHint | Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint | Qt.WindowMaximizeButtonHint )
 
         central_widget = QWidget(self)
         self.setCentralWidget(central_widget)
