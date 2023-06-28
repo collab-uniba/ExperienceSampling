@@ -43,9 +43,9 @@ class Notification(QMainWindow):
         answerLayout = QVBoxLayout()
         layout.addLayout(answerLayout)
 
-        self.button1 = QPushButton("Dismiss")
+        # self.button1 = QPushButton("Dismiss")
         self.button2 = QPushButton("Postpone: " + str(self.app.postponeTime) + " min")
-        self.button1.clicked.connect(self.dismissAction)
+        # self.button1.clicked.connect(self.dismissAction)
         self.button2.clicked.connect(self.postponeAction)
 
         self.slider = QSlider(Qt.Horizontal)
@@ -54,7 +54,7 @@ class Notification(QMainWindow):
         self.slider.setValue(self.app.postponeTime)
         self.slider.valueChanged.connect(self.sliderChanged)
 
-        answerLayout.addWidget(self.button1)
+        # answerLayout.addWidget(self.button1)
         answerLayout.addWidget(self.button2)
         answerLayout.addWidget(self.slider)
 
