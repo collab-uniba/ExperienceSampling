@@ -1,12 +1,14 @@
-from PyQt5.QtWidgets import *
+import csv
+import shutil
+import sys
+
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
-import sys, csv, shutil
-
-from ExperienceSampling.Poll import Poll
 from ExperienceSampling.Notification import Notification
 from ExperienceSampling.Plot import Plot
+from ExperienceSampling.Poll import Poll
 from ExperienceSampling.Utility import *
 
 
@@ -66,7 +68,7 @@ class App(QApplication):
 
     def startPostponeTimer(self):
         self.postponeTimer.start(self.postponeTime*1000*self.minutes())
-    
+
     def stopPostponeTimer(self):
         self.postponeTimer.stop()
 
@@ -86,7 +88,7 @@ class App(QApplication):
     def exportCSV(self):
         if csvFileCheck():
             name = QFileDialog.getSaveFileName(caption='Salva dati', directory=exportPath(), filter='CSV(*.csv)')
-            if name[0]:      
+            if name[0]:
                 shutil.copyfile(csvFilePath(), name[0])
         else:
             msg = QMessageBox()
@@ -95,7 +97,7 @@ class App(QApplication):
             msg.setWindowTitle("Error")
             msg.setIcon(QMessageBox.Warning)
             msg.exec_()
-            
+
 
     def updatePlot(self):
         self.plot.updatePlot()
