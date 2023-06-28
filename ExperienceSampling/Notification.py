@@ -136,10 +136,6 @@ Arcangelo Saracino (Arkango)
     def plotEvent(self):
         self.app.showPlot()
 
-    def mousePressEvent(self, ev):
-        self.hide()
-        self.app.showPoll()
-
     def sliderChanged(self):
         value = self.slider.value()
         self.button2.setText("Postpone: " + str(value) + " min")
