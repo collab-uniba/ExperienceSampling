@@ -2,11 +2,20 @@
 A collection of support functions
 """
 
-import os, sys, appdirs, platform, csv, socket, uuid, getpass, shutil
-import numpy as np
+import csv
+import datetime
+import getpass
+import os
+import platform
+import shutil
+import socket
+import sys
+import uuid
 from pathlib import Path
 from urllib.request import urlopen
-import datetime
+
+import appdirs
+import numpy as np
 
 
 def resource_path(relative_path):
@@ -57,16 +66,16 @@ def exportPath():
 
     if isMSWindows():
         return os.path.join(os.path.join(str(Path.home()), "Desktop"),"data.csv")
-    
+
     return os.path.join(str(Path.home()),'data.csv')
 
 def csv2numpy(file, date=None):
     """ Returns the valence and arousal values as a NumPy array """
-        
+
     x = np.array([]).astype(int)
     y = np.array([]).astype(int)
-    
-    with open(file) as csv_file:      
+
+    with open(file) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
             if row[6] == "POPUP_CLOSED":
@@ -78,7 +87,7 @@ def csv2numpy(file, date=None):
 def earliestDate(file):
     """ Returns the date of the oldest submission as a datetime.date object """
 
-    with open(file) as csv_file:      
+    with open(file) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
             if row[6] == "POPUP_CLOSED":

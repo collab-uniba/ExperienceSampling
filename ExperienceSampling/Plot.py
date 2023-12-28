@@ -1,11 +1,12 @@
-from PyQt5.QtWidgets import *
+import matplotlib
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
-import matplotlib
 matplotlib.use('Qt5Agg')
 import numpy as np
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt5agg import \
+    FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
 from ExperienceSampling.Utility import *
@@ -21,12 +22,13 @@ class Plot(QMainWindow):
 
         QMainWindow.__init__(self)
         self.setWindowTitle("Retrospective")
+        self.setWindowFlags(Qt.Window | Qt.WindowTitleHint | Qt.CustomizeWindowHint | Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint | Qt.WindowMaximizeButtonHint )
 
         central_widget = QWidget(self)
         self.setCentralWidget(central_widget)
         layout = QVBoxLayout()
         central_widget.setLayout(layout)
-        
+
         self.mpl = MyMplCanvas(self)
         layout.addWidget(self.mpl)
 
@@ -97,12 +99,12 @@ class MyMplCanvas(FigureCanvas):
 
 
     def compute_figure(self, date=None):
-        
+
         self.axes.spines['left'].set_position('center')
         self.axes.spines['bottom'].set_position('center')
         self.axes.spines['top'].set_position('center')
         self.axes.spines['right'].set_position('center')
-            
+
         self.axes.set_xticks([], [])
         self.axes.set_yticks([], [])
         self.axes.set_xlim(0, 6)
@@ -115,19 +117,19 @@ class MyMplCanvas(FigureCanvas):
 
         try:
             x,y = csv2numpy(csvFilePath(),date=date)
-            
+
             hist, xbins,ybins = np.histogram2d(y,x, bins=range(7))
             X,Y = np.meshgrid(xbins[:-1], ybins[:-1])
             X = X[hist != 0]; Y = Y[hist != 0]
             Z   = hist[hist != 0]
-            
+
             if (len(x)>0):
                 self.axes.scatter(X, Y, s=Z/Z.max()*500, c=Z/Z.max(), cmap="winter_r", alpha=0.8)
         except IOError:
             pass
 
     def update_figure(self, date=None):
-        
+
         self.axes.cla()
         self.compute_figure(date=date)
         self.draw()

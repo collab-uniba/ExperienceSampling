@@ -1,8 +1,9 @@
-from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 from ExperienceSampling.Utility import *
+
 
 class Notification(QMainWindow):
 
@@ -14,7 +15,7 @@ class Notification(QMainWindow):
         self.setWindowTitle("Experience Sampling")
 
         # set no borders, no titlebar, no taskbar icon, always on top
-        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.Tool)
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
 
         # ================ layout ================
         central_widget = QWidget(self)
@@ -42,18 +43,18 @@ class Notification(QMainWindow):
         answerLayout = QVBoxLayout()
         layout.addLayout(answerLayout)
 
-        self.button1 = QPushButton("Dismiss")
+        # self.button1 = QPushButton("Dismiss")
         self.button2 = QPushButton("Postpone: " + str(self.app.postponeTime) + " min")
-        self.button1.clicked.connect(self.dismissAction)
+        # self.button1.clicked.connect(self.dismissAction)
         self.button2.clicked.connect(self.postponeAction)
-        
+
         self.slider = QSlider(Qt.Horizontal)
         self.slider.setMinimum(5)
         self.slider.setMaximum(120)
         self.slider.setValue(self.app.postponeTime)
         self.slider.valueChanged.connect(self.sliderChanged)
 
-        answerLayout.addWidget(self.button1)
+        # answerLayout.addWidget(self.button1)
         answerLayout.addWidget(self.button2)
         answerLayout.addWidget(self.slider)
 
@@ -66,7 +67,7 @@ class Notification(QMainWindow):
             self.tray_icon.setIcon(QIcon(resource_path("data/tray.png")))
         tray_menu = QMenu()
         self.tray_icon.setContextMenu(tray_menu)
-        
+
         plot_action = QAction("Show Retrospective", self)
         show_action = QAction("Show Emotion Pop-up", self)
         set_action = QAction("Set timer", self)
@@ -74,7 +75,7 @@ class Notification(QMainWindow):
         about_action = QAction("About", self)
         reset_action = QAction("Clear data and quit", self)
         quit_action = QAction("Quit", self)
-        
+
         plot_action.triggered.connect(self.plotEvent)
         show_action.triggered.connect(self.showPollEvent)
         set_action.triggered.connect(self.setAction)
@@ -102,7 +103,7 @@ class Notification(QMainWindow):
     def about(self):
         QMessageBox.about(self, "About",
         """Experience Sampling, 2019
-        
+
 Giuseppe Antonio Nanna (h3r0n)
 Arcangelo Saracino (Arkango)
         """)
@@ -134,10 +135,6 @@ Arcangelo Saracino (Arkango)
 
     def plotEvent(self):
         self.app.showPlot()
-
-    def mousePressEvent(self, ev):
-        self.hide()
-        self.app.showPoll()
 
     def sliderChanged(self):
         value = self.slider.value()

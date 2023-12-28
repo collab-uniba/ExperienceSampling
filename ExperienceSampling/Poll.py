@@ -1,8 +1,8 @@
-from PyQt5.QtWidgets import *
+import time
+
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-
-import time
+from PyQt5.QtWidgets import *
 
 from ExperienceSampling.Utility import *
 
@@ -24,7 +24,7 @@ class Poll(QMainWindow):
 
         self.activities = ['', 'Coding', 'Bugfixing', 'Testing', 'Design', 'Meeting', 'Email', 'Helping', 'Networking', 'Learning', 'Administrative tasks', 'Documentation', 'Just arrived', 'Other']
         self.productivityLevel = ['Very low','Below average','Average','Above average','Very high']
-        
+
         # ================ layout ================
 
         self.container = QWidget(self)
@@ -70,7 +70,7 @@ class Poll(QMainWindow):
         feel1Group.setToolTip('''The valence level measures how pleasant or unpleasant one feels about something and range from a frown to a smile.
 If you feel completely annoyed, unhappy, unsatisfied, melancholic, despaired, bored, you can indicate this by choosing the figure at the left.
 The other end of the scale is when you feel completely happy, pleased, satisfied, contented, and hopeful.
-The figures also allow you to describe intermediate feelings of pleasure, by choosing any other pictures.''')  
+The figures also allow you to describe intermediate feelings of pleasure, by choosing any other pictures.''')
 
         #images
         images1 = []
@@ -189,7 +189,7 @@ If you feel neither in control nor controlled you should chose middle picture.''
         productivityLayout.addWidget(productivityGroup)
         productivityGroupLayout = QHBoxLayout()
         productivityGroup.setLayout(productivityGroupLayout)
-        
+
         self.radioButtons4 = []
         [self.radioButtons4.append(QRadioButton(str(i))) for i in self.productivityLevel]
         [i.clicked.connect(self.checkPollComplete) for i in self.radioButtons4]
@@ -226,7 +226,7 @@ If you feel neither in control nor controlled you should chose middle picture.''
         self.app.startPollTimer()
         self.resetForm()
         self.hide()
-        
+
     def resetForm(self):
         self.combobox1.setCurrentIndex(0)
 
@@ -275,7 +275,7 @@ If you feel neither in control nor controlled you should chose middle picture.''
         if comboValid and radio1Valid and radio2Valid and radio3Valid and radio4Valid:
             self.button1.setEnabled(True)
             self.button1.repaint(self.button1.rect())   # Qt bug workaround: https://github.com/3ll3d00d/beqdesigner/issues/56
-      
+
     def submitForm(self):
         closed = int(time.time())
         activity = self.combobox1.currentText()
@@ -284,7 +284,7 @@ If you feel neither in control nor controlled you should chose middle picture.''
         for i in self.radioButtons1:
             if i.isChecked():
                 valence = i.text()
-    
+
         arousal = ''
         for i in self.radioButtons2:
             if i.isChecked():
@@ -313,10 +313,10 @@ class QPlainTextEditSmall(QPlainTextEdit):
 
     def __init__(self, parent=None):
         QPlainTextEdit.__init__(self, parent)
-    
+
     def sizeHint(self):
         return QSize(1,1)
-    
+
     def minimumSizeHint(self):
         return QSize(1,1)
 
@@ -325,7 +325,7 @@ class QScrollAreaFit(QScrollArea):
 
     def __init__(self, parent=None):
         QScrollArea.__init__(self, parent)
-    
+
     def sizeHint(self):
         # available vertical screen space (minus docks and taskbars)
         max_height = int(QApplication.desktop().screenGeometry().height()*.88)
@@ -344,7 +344,7 @@ class QScrollAreaFit(QScrollArea):
 class PollResult:
     def __init__(self, opened, closed, activity, valence, arousal, dominance, productivity, note=''):
         self.opened = opened
-        self.closed = closed        
+        self.closed = closed
         self.activity = activity
         self.valence = valence
         self.arousal = arousal
